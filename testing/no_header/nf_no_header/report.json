@@ -1,0 +1,127 @@
+{
+  "statistics": {
+    "total_tables": 1,
+    "total_columns": 6,
+    "total_foreign_keys": 0,
+    "tables_with_primary_key": 1,
+    "primary_key_coverage": "100.0%",
+    "data_type_distribution": {
+      "INTEGER": 2,
+      "VARCHAR": 3,
+      "CHAR": 1
+    },
+    "normalization_suggestions_count": 3,
+    "normalization_suggestions_by_type": {
+      "2NF": 3
+    }
+  },
+  "file_metadata": {
+    "/Users/milica/Desktop/master-thesis/testing/no_header/nf_no_header/test_nf_data_no_header.csv": {
+      "file_path": "/Users/milica/Desktop/master-thesis/testing/no_header/nf_no_header/test_nf_data_no_header.csv",
+      "sample_method": "sequential",
+      "encoding": "utf-8",
+      "delimiter": ","
+    }
+  },
+  "tables": {
+    "test_nf_data_no_header": {
+      "name": "test_nf_data_no_header",
+      "row_count": 16,
+      "column_count": 6,
+      "primary_key": [
+        "column_1",
+        "column_2"
+      ],
+      "foreign_key_count": 0,
+      "columns": [
+        {
+          "name": "column_1",
+          "data_type": "INTEGER",
+          "nullable": false,
+          "max_length": null,
+          "statistics": {
+            "unique_ratio": "37.5%",
+            "null_count": 0,
+            "distinct_count": 6
+          }
+        },
+        {
+          "name": "column_2",
+          "data_type": "VARCHAR",
+          "nullable": false,
+          "max_length": 14,
+          "statistics": {
+            "unique_ratio": "31.2%",
+            "null_count": 0,
+            "distinct_count": 5
+          }
+        },
+        {
+          "name": "column_3",
+          "data_type": "VARCHAR",
+          "nullable": false,
+          "max_length": 28,
+          "statistics": {
+            "unique_ratio": "37.5%",
+            "null_count": 0,
+            "distinct_count": 6
+          }
+        },
+        {
+          "name": "column_4",
+          "data_type": "VARCHAR",
+          "nullable": false,
+          "max_length": 30,
+          "statistics": {
+            "unique_ratio": "31.2%",
+            "null_count": 0,
+            "distinct_count": 5
+          }
+        },
+        {
+          "name": "column_5",
+          "data_type": "CHAR",
+          "nullable": false,
+          "max_length": 1,
+          "statistics": {
+            "unique_ratio": "18.8%",
+            "null_count": 0,
+            "distinct_count": 3
+          }
+        },
+        {
+          "name": "column_6",
+          "data_type": "INTEGER",
+          "nullable": false,
+          "max_length": null,
+          "statistics": {
+            "unique_ratio": "12.5%",
+            "null_count": 0,
+            "distinct_count": 2
+          }
+        }
+      ],
+      "foreign_keys": []
+    }
+  },
+  "normalization_suggestions": [
+    {
+      "table_name": "test_nf_data_no_header",
+      "suggestion_type": "2NF",
+      "description": "Column 'column_3' has partial dependency on 'column_1' (part of composite key ['column_1', 'column_2']) instead of depending on the full key (strength: 100.0%). Consider extracting to a separate 'column_1_column_3' table with columns: column_1, column_3.",
+      "confidence": "100.0%"
+    },
+    {
+      "table_name": "test_nf_data_no_header",
+      "suggestion_type": "2NF",
+      "description": "Column 'column_4' has partial dependency on 'column_2' (part of composite key ['column_1', 'column_2']) instead of depending on the full key (strength: 100.0%). Consider extracting to a separate 'column_2_column_4' table with columns: column_2, column_4.",
+      "confidence": "100.0%"
+    },
+    {
+      "table_name": "test_nf_data_no_header",
+      "suggestion_type": "2NF",
+      "description": "Column 'column_6' has partial dependency on 'column_2' (part of composite key ['column_1', 'column_2']) instead of depending on the full key (strength: 100.0%). Consider extracting to a separate 'column_2_column_6' table with columns: column_2, column_6.",
+      "confidence": "100.0%"
+    }
+  ]
+}

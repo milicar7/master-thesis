@@ -1,0 +1,475 @@
+{
+  "statistics": {
+    "total_tables": 4,
+    "total_columns": 23,
+    "total_foreign_keys": 3,
+    "tables_with_primary_key": 4,
+    "primary_key_coverage": "100.0%",
+    "data_type_distribution": {
+      "INTEGER": 13,
+      "VARCHAR": 4,
+      "BOOLEAN": 1,
+      "DATETIME": 5
+    },
+    "normalization_suggestions_count": 15,
+    "normalization_suggestions_by_type": {
+      "3NF": 15
+    }
+  },
+  "file_metadata": {
+    "/Users/milica/Desktop/master-thesis/testing/no_header/schema_no_header/data/customers.csv": {
+      "file_path": "/Users/milica/Desktop/master-thesis/testing/no_header/schema_no_header/data/customers.csv",
+      "sample_method": "sequential",
+      "encoding": "utf-8",
+      "delimiter": ","
+    },
+    "/Users/milica/Desktop/master-thesis/testing/no_header/schema_no_header/data/products.csv": {
+      "file_path": "/Users/milica/Desktop/master-thesis/testing/no_header/schema_no_header/data/products.csv",
+      "sample_method": "sequential",
+      "encoding": "utf-8",
+      "delimiter": ","
+    },
+    "/Users/milica/Desktop/master-thesis/testing/no_header/schema_no_header/data/orders.csv": {
+      "file_path": "/Users/milica/Desktop/master-thesis/testing/no_header/schema_no_header/data/orders.csv",
+      "sample_method": "sequential",
+      "encoding": "utf-8",
+      "delimiter": ","
+    },
+    "/Users/milica/Desktop/master-thesis/testing/no_header/schema_no_header/data/sellers.csv": {
+      "file_path": "/Users/milica/Desktop/master-thesis/testing/no_header/schema_no_header/data/sellers.csv",
+      "sample_method": "sequential",
+      "encoding": "utf-8",
+      "delimiter": ","
+    }
+  },
+  "tables": {
+    "customers": {
+      "name": "customers",
+      "row_count": 8,
+      "column_count": 4,
+      "primary_key": [
+        "column_1"
+      ],
+      "foreign_key_count": 0,
+      "columns": [
+        {
+          "name": "column_1",
+          "data_type": "INTEGER",
+          "nullable": false,
+          "max_length": null,
+          "statistics": {
+            "unique_ratio": "100.0%",
+            "null_count": 0,
+            "distinct_count": 8
+          }
+        },
+        {
+          "name": "column_2",
+          "data_type": "INTEGER",
+          "nullable": false,
+          "max_length": null,
+          "statistics": {
+            "unique_ratio": "100.0%",
+            "null_count": 0,
+            "distinct_count": 8
+          }
+        },
+        {
+          "name": "column_3",
+          "data_type": "VARCHAR",
+          "nullable": false,
+          "max_length": 42,
+          "statistics": {
+            "unique_ratio": "75.0%",
+            "null_count": 0,
+            "distinct_count": 6
+          }
+        },
+        {
+          "name": "column_4",
+          "data_type": "VARCHAR",
+          "nullable": false,
+          "max_length": 4,
+          "statistics": {
+            "unique_ratio": "25.0%",
+            "null_count": 0,
+            "distinct_count": 2
+          }
+        }
+      ],
+      "foreign_keys": []
+    },
+    "products": {
+      "name": "products",
+      "row_count": 3,
+      "column_count": 9,
+      "primary_key": [
+        "column_1"
+      ],
+      "foreign_key_count": 2,
+      "columns": [
+        {
+          "name": "column_1",
+          "data_type": "INTEGER",
+          "nullable": false,
+          "max_length": null,
+          "statistics": {
+            "unique_ratio": "100.0%",
+            "null_count": 0,
+            "distinct_count": 3
+          }
+        },
+        {
+          "name": "column_2",
+          "data_type": "INTEGER",
+          "nullable": false,
+          "max_length": null,
+          "statistics": {
+            "unique_ratio": "100.0%",
+            "null_count": 0,
+            "distinct_count": 3
+          }
+        },
+        {
+          "name": "column_3",
+          "data_type": "INTEGER",
+          "nullable": false,
+          "max_length": null,
+          "statistics": {
+            "unique_ratio": "100.0%",
+            "null_count": 0,
+            "distinct_count": 3
+          }
+        },
+        {
+          "name": "column_4",
+          "data_type": "INTEGER",
+          "nullable": false,
+          "max_length": null,
+          "statistics": {
+            "unique_ratio": "100.0%",
+            "null_count": 0,
+            "distinct_count": 3
+          }
+        },
+        {
+          "name": "column_5",
+          "data_type": "BOOLEAN",
+          "nullable": false,
+          "max_length": null,
+          "statistics": {
+            "unique_ratio": "33.3%",
+            "null_count": 0,
+            "distinct_count": 1
+          }
+        },
+        {
+          "name": "column_6",
+          "data_type": "INTEGER",
+          "nullable": false,
+          "max_length": null,
+          "statistics": {
+            "unique_ratio": "100.0%",
+            "null_count": 0,
+            "distinct_count": 3
+          }
+        },
+        {
+          "name": "column_7",
+          "data_type": "INTEGER",
+          "nullable": false,
+          "max_length": null,
+          "statistics": {
+            "unique_ratio": "100.0%",
+            "null_count": 0,
+            "distinct_count": 3
+          }
+        },
+        {
+          "name": "column_8",
+          "data_type": "INTEGER",
+          "nullable": false,
+          "max_length": null,
+          "statistics": {
+            "unique_ratio": "100.0%",
+            "null_count": 0,
+            "distinct_count": 3
+          }
+        },
+        {
+          "name": "column_9",
+          "data_type": "INTEGER",
+          "nullable": false,
+          "max_length": null,
+          "statistics": {
+            "unique_ratio": "100.0%",
+            "null_count": 0,
+            "distinct_count": 3
+          }
+        }
+      ],
+      "foreign_keys": [
+        {
+          "columns": [
+            "column_2"
+          ],
+          "referenced_table": "sellers",
+          "referenced_columns": [
+            "column_1"
+          ],
+          "confidence": "100.0%",
+          "reasoning": "100.0% value overlap with strong relationship indicators"
+        },
+        {
+          "columns": [
+            "column_5"
+          ],
+          "referenced_table": "customers",
+          "referenced_columns": [
+            "column_1"
+          ],
+          "confidence": "100.0%",
+          "reasoning": "100.0% value overlap with strong relationship indicators"
+        }
+      ]
+    },
+    "orders": {
+      "name": "orders",
+      "row_count": 8,
+      "column_count": 8,
+      "primary_key": [
+        "column_1"
+      ],
+      "foreign_key_count": 1,
+      "columns": [
+        {
+          "name": "column_1",
+          "data_type": "INTEGER",
+          "nullable": false,
+          "max_length": null,
+          "statistics": {
+            "unique_ratio": "100.0%",
+            "null_count": 0,
+            "distinct_count": 8
+          }
+        },
+        {
+          "name": "column_2",
+          "data_type": "INTEGER",
+          "nullable": false,
+          "max_length": null,
+          "statistics": {
+            "unique_ratio": "100.0%",
+            "null_count": 0,
+            "distinct_count": 8
+          }
+        },
+        {
+          "name": "column_3",
+          "data_type": "VARCHAR",
+          "nullable": false,
+          "max_length": 18,
+          "statistics": {
+            "unique_ratio": "12.5%",
+            "null_count": 0,
+            "distinct_count": 1
+          }
+        },
+        {
+          "name": "column_4",
+          "data_type": "DATETIME",
+          "nullable": false,
+          "max_length": null,
+          "statistics": {
+            "unique_ratio": "100.0%",
+            "null_count": 0,
+            "distinct_count": 8
+          }
+        },
+        {
+          "name": "column_5",
+          "data_type": "DATETIME",
+          "nullable": false,
+          "max_length": null,
+          "statistics": {
+            "unique_ratio": "100.0%",
+            "null_count": 0,
+            "distinct_count": 8
+          }
+        },
+        {
+          "name": "column_6",
+          "data_type": "DATETIME",
+          "nullable": false,
+          "max_length": null,
+          "statistics": {
+            "unique_ratio": "100.0%",
+            "null_count": 0,
+            "distinct_count": 8
+          }
+        },
+        {
+          "name": "column_7",
+          "data_type": "DATETIME",
+          "nullable": false,
+          "max_length": null,
+          "statistics": {
+            "unique_ratio": "100.0%",
+            "null_count": 0,
+            "distinct_count": 8
+          }
+        },
+        {
+          "name": "column_8",
+          "data_type": "DATETIME",
+          "nullable": false,
+          "max_length": null,
+          "statistics": {
+            "unique_ratio": "100.0%",
+            "null_count": 0,
+            "distinct_count": 8
+          }
+        }
+      ],
+      "foreign_keys": [
+        {
+          "columns": [
+            "column_2"
+          ],
+          "referenced_table": "customers",
+          "referenced_columns": [
+            "column_1"
+          ],
+          "confidence": "100.0%",
+          "reasoning": "100.0% value overlap with strong relationship indicators"
+        }
+      ]
+    },
+    "sellers": {
+      "name": "sellers",
+      "row_count": 3,
+      "column_count": 2,
+      "primary_key": [
+        "column_1"
+      ],
+      "foreign_key_count": 0,
+      "columns": [
+        {
+          "name": "column_1",
+          "data_type": "INTEGER",
+          "nullable": false,
+          "max_length": null,
+          "statistics": {
+            "unique_ratio": "100.0%",
+            "null_count": 0,
+            "distinct_count": 3
+          }
+        },
+        {
+          "name": "column_2",
+          "data_type": "VARCHAR",
+          "nullable": false,
+          "max_length": 14,
+          "statistics": {
+            "unique_ratio": "100.0%",
+            "null_count": 0,
+            "distinct_count": 3
+          }
+        }
+      ],
+      "foreign_keys": []
+    }
+  },
+  "normalization_suggestions": [
+    {
+      "table_name": "customers",
+      "suggestion_type": "3NF",
+      "description": "Transitive dependency detected: column_4, column_3 depends on column_2, creating transitive dependency through primary key. Consider extracting to a separate 'column_2_details' table with columns: column_2, column_4, column_3.",
+      "confidence": "100.0%"
+    },
+    {
+      "table_name": "customers",
+      "suggestion_type": "3NF",
+      "description": "Transitive dependency detected: column_4 depends on column_3, creating transitive dependency through primary key. Consider extracting to a separate 'column_3_details' table with columns: column_3, column_4.",
+      "confidence": "100.0%"
+    },
+    {
+      "table_name": "products",
+      "suggestion_type": "3NF",
+      "description": "Transitive dependency detected: column_4, column_5, column_2, column_3, column_6, column_7, column_9 depends on column_8, creating transitive dependency through primary key. Consider extracting to a separate 'column_8_details' table with columns: column_8, column_4, column_5, column_2, column_3, column_6, column_7, column_9.",
+      "confidence": "100.0%"
+    },
+    {
+      "table_name": "products",
+      "suggestion_type": "3NF",
+      "description": "Transitive dependency detected: column_8, column_5, column_2, column_3, column_6, column_7, column_9 depends on column_4, creating transitive dependency through primary key. Consider extracting to a separate 'column_4_details' table with columns: column_4, column_8, column_5, column_2, column_3, column_6, column_7, column_9.",
+      "confidence": "100.0%"
+    },
+    {
+      "table_name": "products",
+      "suggestion_type": "3NF",
+      "description": "Transitive dependency detected: column_8, column_4, column_5, column_3, column_6, column_7, column_9 depends on column_2, creating transitive dependency through primary key. Consider extracting to a separate 'column_2_details' table with columns: column_2, column_8, column_4, column_5, column_3, column_6, column_7, column_9.",
+      "confidence": "100.0%"
+    },
+    {
+      "table_name": "products",
+      "suggestion_type": "3NF",
+      "description": "Transitive dependency detected: column_8, column_4, column_5, column_2, column_6, column_7, column_9 depends on column_3, creating transitive dependency through primary key. Consider extracting to a separate 'column_3_details' table with columns: column_3, column_8, column_4, column_5, column_2, column_6, column_7, column_9.",
+      "confidence": "100.0%"
+    },
+    {
+      "table_name": "products",
+      "suggestion_type": "3NF",
+      "description": "Transitive dependency detected: column_8, column_4, column_5, column_2, column_3, column_7, column_9 depends on column_6, creating transitive dependency through primary key. Consider extracting to a separate 'column_6_details' table with columns: column_6, column_8, column_4, column_5, column_2, column_3, column_7, column_9.",
+      "confidence": "100.0%"
+    },
+    {
+      "table_name": "products",
+      "suggestion_type": "3NF",
+      "description": "Transitive dependency detected: column_8, column_4, column_5, column_2, column_3, column_6, column_9 depends on column_7, creating transitive dependency through primary key. Consider extracting to a separate 'column_7_details' table with columns: column_7, column_8, column_4, column_5, column_2, column_3, column_6, column_9.",
+      "confidence": "100.0%"
+    },
+    {
+      "table_name": "products",
+      "suggestion_type": "3NF",
+      "description": "Transitive dependency detected: column_8, column_4, column_5, column_2, column_3, column_6, column_7 depends on column_9, creating transitive dependency through primary key. Consider extracting to a separate 'column_9_details' table with columns: column_9, column_8, column_4, column_5, column_2, column_3, column_6, column_7.",
+      "confidence": "100.0%"
+    },
+    {
+      "table_name": "orders",
+      "suggestion_type": "3NF",
+      "description": "Transitive dependency detected: column_4, column_5, column_2, column_3, column_6, column_7 depends on column_8, creating transitive dependency through primary key. Consider extracting to a separate 'column_8_details' table with columns: column_8, column_4, column_5, column_2, column_3, column_6, column_7.",
+      "confidence": "100.0%"
+    },
+    {
+      "table_name": "orders",
+      "suggestion_type": "3NF",
+      "description": "Transitive dependency detected: column_8, column_5, column_2, column_3, column_6, column_7 depends on column_4, creating transitive dependency through primary key. Consider extracting to a separate 'column_4_details' table with columns: column_4, column_8, column_5, column_2, column_3, column_6, column_7.",
+      "confidence": "100.0%"
+    },
+    {
+      "table_name": "orders",
+      "suggestion_type": "3NF",
+      "description": "Transitive dependency detected: column_8, column_4, column_2, column_3, column_6, column_7 depends on column_5, creating transitive dependency through primary key. Consider extracting to a separate 'column_5_details' table with columns: column_5, column_8, column_4, column_2, column_3, column_6, column_7.",
+      "confidence": "100.0%"
+    },
+    {
+      "table_name": "orders",
+      "suggestion_type": "3NF",
+      "description": "Transitive dependency detected: column_8, column_4, column_5, column_3, column_6, column_7 depends on column_2, creating transitive dependency through primary key. Consider extracting to a separate 'column_2_details' table with columns: column_2, column_8, column_4, column_5, column_3, column_6, column_7.",
+      "confidence": "100.0%"
+    },
+    {
+      "table_name": "orders",
+      "suggestion_type": "3NF",
+      "description": "Transitive dependency detected: column_8, column_4, column_5, column_2, column_3, column_7 depends on column_6, creating transitive dependency through primary key. Consider extracting to a separate 'column_6_details' table with columns: column_6, column_8, column_4, column_5, column_2, column_3, column_7.",
+      "confidence": "100.0%"
+    },
+    {
+      "table_name": "orders",
+      "suggestion_type": "3NF",
+      "description": "Transitive dependency detected: column_8, column_4, column_5, column_2, column_3, column_6 depends on column_7, creating transitive dependency through primary key. Consider extracting to a separate 'column_7_details' table with columns: column_7, column_8, column_4, column_5, column_2, column_3, column_6.",
+      "confidence": "100.0%"
+    }
+  ]
+}

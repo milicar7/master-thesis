@@ -70,7 +70,7 @@ def create_3nf_compliant_table_spec():
 
 
 def test_third_normal_form_violations():
-    csv_path = os.path.join(os.path.dirname(__file__), "test_3nf_data.csv")
+    csv_path = os.path.join(os.path.dirname(__file__), "test_3nf_data_no_header.csv")
     headers, rows = load_csv_data(csv_path)
 
     table_spec = create_student_table_spec()

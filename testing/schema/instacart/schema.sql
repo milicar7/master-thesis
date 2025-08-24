@@ -1,5 +1,5 @@
 -- Generated DDL for postgresql
--- Generated at: 2025-08-24T13:56:13.769439
+-- Generated at: 2025-08-24T17:07:43.294564
 
 CREATE TABLE "order_products" (
     "order_id" INTEGER NOT NULL,

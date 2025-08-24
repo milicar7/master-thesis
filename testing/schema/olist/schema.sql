@@ -1,5 +1,5 @@
 -- Generated DDL for postgresql
--- Generated at: 2025-08-24T13:54:59.593051
+-- Generated at: 2025-08-24T17:06:58.782003
 
 CREATE TABLE "olist_sellers_dataset" (
     "seller_id" VARCHAR(64) NOT NULL,

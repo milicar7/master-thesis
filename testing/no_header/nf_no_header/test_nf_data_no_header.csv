@@ -1,0 +1,16 @@
+001,CS101,John Smith,Intro to CS,A,3
+001,CS102,John Smith,Data Structures,B,4
+001,MATH201,John Smith,Calculus I,A,4
+002,CS101,Jane Doe,Intro to CS,B,3
+002,CS102,Jane Doe,Data Structures,A,4
+002,PHYS101,Jane Doe,Physics I,B,3
+003,CS101,Bob Johnson,Intro to CS,C,3
+003,MATH201,Bob Johnson,Calculus I,B,4
+003,ENG101,Bob Johnson,English Comp,A,3
+004,CS102,Alice Brown,Data Structures,A,4
+004,PHYS101,Alice Brown,Physics I,A,3
+004,MATH201,Alice Brown,Calculus I,A,4
+005,CS101,Charlie Wilson,Intro to CS,B,3
+005,ENG101,Charlie Wilson,English Comp,B,3
+006,CS102,Diana Lee,Data Structures,B,4
+006,PHYS101,Diana Lee,Physics I,C,3

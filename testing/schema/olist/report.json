@@ -855,7 +855,7 @@
     {
       "table_name": "olist_orders_dataset",
       "suggestion_type": "3NF",
-      "description": "Transitive dependency detected: order_estimated_delivery_date, order_purchase_timestamp, order_status, order_delivered_customer_date, order_approved_at, order_delivered_carrier_date depends on customer_id, creating transitive dependency through primary key. Consider extracting to a separate 'customer_id_details' table with columns: customer_id, order_estimated_delivery_date, order_purchase_timestamp, order_status, order_delivered_customer_date, order_approved_at, order_delivered_carrier_date.",
+      "description": "Transitive dependency detected: order_approved_at, order_delivered_carrier_date, order_estimated_delivery_date, order_status, order_purchase_timestamp, order_delivered_customer_date depends on customer_id, creating transitive dependency through primary key. Consider extracting to a separate 'customer_id_details' table with columns: customer_id, order_approved_at, order_delivered_carrier_date, order_estimated_delivery_date, order_status, order_purchase_timestamp, order_delivered_customer_date.",
       "confidence": "100.0%"
     },
     {

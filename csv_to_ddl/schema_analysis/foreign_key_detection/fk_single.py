@@ -1,4 +1,5 @@
 import logging
+import re
 from typing import Dict, List, Set
 
 from csv_to_ddl.config.default_config import KeyConfig
@@ -58,12 +59,24 @@ def _calculate_match_score(col_values: Set[str], ref_values: Set[str],
     if not is_valid:
         return 0.0, overlap_ratio
 
+    pk_bonus = _get_primary_key_bonus(ref_col_name, ref_table, reference_keys, config)
+
     naming_score = _get_naming_score(col_name, ref_col_name, ref_table, config)
+    is_generic_column = (_is_generic_column_name(col_name) and _is_generic_column_name(ref_col_name))
+    
+    if is_generic_column:
+        base_score = overlap_ratio * config.fk_validity_bonus
+        final_score = base_score + pk_bonus
+        
+        if overlap_ratio >= config.fk_overlap_threshold and final_score >= config.fk_validation_threshold:
+            return final_score, overlap_ratio
+        else:
+            return 0.0, overlap_ratio
+    
     if naming_score == 0.0:
         return 0.0, overlap_ratio
 
     base_score = (overlap_ratio * config.fk_validity_bonus + naming_score * config.fk_naming_bonus)
-    pk_bonus = _get_primary_key_bonus(ref_col_name, ref_table, reference_keys, config)
     final_score = base_score + pk_bonus
 
     return max(0.0, final_score), overlap_ratio
@@ -78,9 +91,7 @@ def _is_valid_fk_relationship(col_values: Set[str], ref_values: Set[str], config
 
     overlap = len(col_values.intersection(ref_values))
     overlap_ratio = overlap / total
-    if overlap_ratio < config.fk_overlap_threshold:
-        return False, overlap_ratio
-    else:
+    if overlap_ratio > config.fk_overlap_threshold:
         overlap_score = overlap_ratio * config.fk_validation_overlap_bonus
         validation_score += overlap_score
 
@@ -90,6 +101,8 @@ def _is_valid_fk_relationship(col_values: Set[str], ref_values: Set[str], config
         validation_score += size_score
 
         return validation_score >= config.fk_validation_threshold, overlap_ratio
+    else:
+        return False, overlap_ratio
 
 
 def _get_naming_score(col_name: str, ref_col_name: str, ref_table: str, config: KeyConfig) -> float:
@@ -123,3 +136,7 @@ def _get_primary_key_bonus(ref_col_name: str, ref_table: str, reference_keys: Di
         return config.fk_primary_key_target_bonus
 
     return 0.0
+
+
+def _is_generic_column_name(col_name: str) -> bool:
+    return bool(re.match(r'^column_\d+$', col_name.lower()))

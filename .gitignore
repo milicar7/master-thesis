@@ -208,3 +208,5 @@ __marimo__/
 
 #MACOS
 .DS_Store
+
+testing/schema/datasets

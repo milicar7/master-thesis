@@ -1,0 +1,11 @@
+StudentID,Name,CourseID,CourseName,Instructor
+S001,John Doe,CS101,Introduction to Programming,Dr. Smith
+S001,John Doe,MATH201,Calculus I,Prof. Johnson
+S002,Jane Smith,CS101,Introduction to Programming,Dr. Smith
+S002,Jane Smith,ENG101,English Literature,Prof. Brown
+S003,Bob Wilson,MATH201,Calculus I,Prof. Johnson
+S003,Bob Wilson,CS101,Introduction to Programming,Dr. Smith
+S004,Alice Davis,ENG101,English Literature,Prof. Brown
+S004,Alice Davis,HIST101,World History,Dr. Lee
+S005,Charlie Brown,HIST101,World History,Dr. Lee
+S005,Charlie Brown,CS101,Introduction to Programming,Dr. Smith

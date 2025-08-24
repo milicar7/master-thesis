@@ -1,0 +1,904 @@
+{
+  "statistics": {
+    "total_tables": 9,
+    "total_columns": 53,
+    "total_foreign_keys": 7,
+    "tables_with_primary_key": 9,
+    "primary_key_coverage": "100.0%",
+    "data_type_distribution": {
+      "VARCHAR": 25,
+      "INTEGER": 14,
+      "DATETIME": 8,
+      "DECIMAL": 5,
+      "BOOLEAN": 1
+    },
+    "normalization_suggestions_count": 8,
+    "normalization_suggestions_by_type": {
+      "3NF": 2,
+      "2NF": 5,
+      "1NF": 1
+    }
+  },
+  "file_metadata": {
+    "/Users/milica/Desktop/master-thesis/testing/schema/olist/../datasets/olist/olist_sellers_dataset.csv": {
+      "file_path": "/Users/milica/Desktop/master-thesis/testing/schema/olist/../datasets/olist/olist_sellers_dataset.csv",
+      "sample_method": "sequential",
+      "encoding": "utf-8",
+      "delimiter": ","
+    },
+    "/Users/milica/Desktop/master-thesis/testing/schema/olist/../datasets/olist/product_category_name_translation.csv": {
+      "file_path": "/Users/milica/Desktop/master-thesis/testing/schema/olist/../datasets/olist/product_category_name_translation.csv",
+      "sample_method": "sequential",
+      "encoding": "utf-8",
+      "delimiter": ","
+    },
+    "/Users/milica/Desktop/master-thesis/testing/schema/olist/../datasets/olist/olist_orders_dataset.csv": {
+      "file_path": "/Users/milica/Desktop/master-thesis/testing/schema/olist/../datasets/olist/olist_orders_dataset.csv",
+      "sample_method": "sequential",
+      "encoding": "utf-8",
+      "delimiter": ","
+    },
+    "/Users/milica/Desktop/master-thesis/testing/schema/olist/../datasets/olist/olist_order_items_dataset.csv": {
+      "file_path": "/Users/milica/Desktop/master-thesis/testing/schema/olist/../datasets/olist/olist_order_items_dataset.csv",
+      "sample_method": "sequential",
+      "encoding": "utf-8",
+      "delimiter": ","
+    },
+    "/Users/milica/Desktop/master-thesis/testing/schema/olist/../datasets/olist/olist_customers_dataset.csv": {
+      "file_path": "/Users/milica/Desktop/master-thesis/testing/schema/olist/../datasets/olist/olist_customers_dataset.csv",
+      "sample_method": "sequential",
+      "encoding": "utf-8",
+      "delimiter": ","
+    },
+    "/Users/milica/Desktop/master-thesis/testing/schema/olist/../datasets/olist/olist_geolocation_dataset.csv": {
+      "file_path": "/Users/milica/Desktop/master-thesis/testing/schema/olist/../datasets/olist/olist_geolocation_dataset.csv",
+      "sample_method": "sequential",
+      "encoding": "utf-8",
+      "delimiter": ","
+    },
+    "/Users/milica/Desktop/master-thesis/testing/schema/olist/../datasets/olist/olist_order_payments_dataset.csv": {
+      "file_path": "/Users/milica/Desktop/master-thesis/testing/schema/olist/../datasets/olist/olist_order_payments_dataset.csv",
+      "sample_method": "sequential",
+      "encoding": "utf-8",
+      "delimiter": ","
+    },
+    "/Users/milica/Desktop/master-thesis/testing/schema/olist/../datasets/olist/olist_order_reviews_dataset.csv": {
+      "file_path": "/Users/milica/Desktop/master-thesis/testing/schema/olist/../datasets/olist/olist_order_reviews_dataset.csv",
+      "sample_method": "sequential",
+      "encoding": "utf-8",
+      "delimiter": ","
+    },
+    "/Users/milica/Desktop/master-thesis/testing/schema/olist/../datasets/olist/olist_products_dataset.csv": {
+      "file_path": "/Users/milica/Desktop/master-thesis/testing/schema/olist/../datasets/olist/olist_products_dataset.csv",
+      "sample_method": "sequential",
+      "encoding": "utf-8",
+      "delimiter": ","
+    }
+  },
+  "tables": {
+    "olist_sellers_dataset": {
+      "name": "olist_sellers_dataset",
+      "row_count": 3095,
+      "column_count": 4,
+      "primary_key": [
+        "seller_id"
+      ],
+      "foreign_key_count": 0,
+      "columns": [
+        {
+          "name": "seller_id",
+          "data_type": "VARCHAR",
+          "nullable": false,
+          "max_length": 64,
+          "statistics": {
+            "unique_ratio": "100.0%",
+            "null_count": 0,
+            "distinct_count": 3095
+          }
+        },
+        {
+          "name": "seller_zip_code_prefix",
+          "data_type": "INTEGER",
+          "nullable": false,
+          "max_length": null,
+          "statistics": {
+            "unique_ratio": "72.6%",
+            "null_count": 0,
+            "distinct_count": 2246
+          }
+        },
+        {
+          "name": "seller_city",
+          "data_type": "VARCHAR",
+          "nullable": false,
+          "max_length": 80,
+          "statistics": {
+            "unique_ratio": "19.7%",
+            "null_count": 0,
+            "distinct_count": 611
+          }
+        },
+        {
+          "name": "seller_state",
+          "data_type": "VARCHAR",
+          "nullable": false,
+          "max_length": 4,
+          "statistics": {
+            "unique_ratio": "0.7%",
+            "null_count": 0,
+            "distinct_count": 23
+          }
+        }
+      ],
+      "foreign_keys": []
+    },
+    "product_category_name_translation": {
+      "name": "product_category_name_translation",
+      "row_count": 71,
+      "column_count": 2,
+      "primary_key": [
+        "product_category_name"
+      ],
+      "foreign_key_count": 0,
+      "columns": [
+        {
+          "name": "product_category_name",
+          "data_type": "VARCHAR",
+          "nullable": false,
+          "max_length": 92,
+          "statistics": {
+            "unique_ratio": "100.0%",
+            "null_count": 0,
+            "distinct_count": 71
+          }
+        },
+        {
+          "name": "product_category_name_english",
+          "data_type": "VARCHAR",
+          "nullable": false,
+          "max_length": 78,
+          "statistics": {
+            "unique_ratio": "100.0%",
+            "null_count": 0,
+            "distinct_count": 71
+          }
+        }
+      ],
+      "foreign_keys": []
+    },
+    "olist_orders_dataset": {
+      "name": "olist_orders_dataset",
+      "row_count": 99441,
+      "column_count": 8,
+      "primary_key": [
+        "order_id"
+      ],
+      "foreign_key_count": 1,
+      "columns": [
+        {
+          "name": "order_id",
+          "data_type": "VARCHAR",
+          "nullable": false,
+          "max_length": 64,
+          "statistics": {
+            "unique_ratio": "100.0%",
+            "null_count": 0,
+            "distinct_count": 99441
+          }
+        },
+        {
+          "name": "customer_id",
+          "data_type": "VARCHAR",
+          "nullable": false,
+          "max_length": 64,
+          "statistics": {
+            "unique_ratio": "100.0%",
+            "null_count": 0,
+            "distinct_count": 99441
+          }
+        },
+        {
+          "name": "order_status",
+          "data_type": "VARCHAR",
+          "nullable": false,
+          "max_length": 22,
+          "statistics": {
+            "unique_ratio": "0.0%",
+            "null_count": 0,
+            "distinct_count": 8
+          }
+        },
+        {
+          "name": "order_purchase_timestamp",
+          "data_type": "DATETIME",
+          "nullable": false,
+          "max_length": null,
+          "statistics": {
+            "unique_ratio": "99.4%",
+            "null_count": 0,
+            "distinct_count": 98875
+          }
+        },
+        {
+          "name": "order_approved_at",
+          "data_type": "DATETIME",
+          "nullable": true,
+          "max_length": null,
+          "statistics": {
+            "unique_ratio": "91.4%",
+            "null_count": 160,
+            "distinct_count": 90733
+          }
+        },
+        {
+          "name": "order_delivered_carrier_date",
+          "data_type": "DATETIME",
+          "nullable": true,
+          "max_length": null,
+          "statistics": {
+            "unique_ratio": "83.0%",
+            "null_count": 1783,
+            "distinct_count": 81018
+          }
+        },
+        {
+          "name": "order_delivered_customer_date",
+          "data_type": "DATETIME",
+          "nullable": true,
+          "max_length": null,
+          "statistics": {
+            "unique_ratio": "99.2%",
+            "null_count": 2965,
+            "distinct_count": 95664
+          }
+        },
+        {
+          "name": "order_estimated_delivery_date",
+          "data_type": "DATETIME",
+          "nullable": false,
+          "max_length": null,
+          "statistics": {
+            "unique_ratio": "0.5%",
+            "null_count": 0,
+            "distinct_count": 459
+          }
+        }
+      ],
+      "foreign_keys": [
+        {
+          "columns": [
+            "customer_id"
+          ],
+          "referenced_table": "olist_customers_dataset",
+          "referenced_columns": [
+            "customer_id"
+          ],
+          "confidence": "130.0%",
+          "reasoning": "100.0% value overlap with strong relationship indicators"
+        }
+      ]
+    },
+    "olist_order_items_dataset": {
+      "name": "olist_order_items_dataset",
+      "row_count": 99999,
+      "column_count": 7,
+      "primary_key": [
+        "order_id",
+        "order_item_id"
+      ],
+      "foreign_key_count": 3,
+      "columns": [
+        {
+          "name": "order_id",
+          "data_type": "VARCHAR",
+          "nullable": false,
+          "max_length": 64,
+          "statistics": {
+            "unique_ratio": "87.6%",
+            "null_count": 0,
+            "distinct_count": 87572
+          }
+        },
+        {
+          "name": "order_item_id",
+          "data_type": "INTEGER",
+          "nullable": false,
+          "max_length": null,
+          "statistics": {
+            "unique_ratio": "0.0%",
+            "null_count": 0,
+            "distinct_count": 21
+          }
+        },
+        {
+          "name": "product_id",
+          "data_type": "VARCHAR",
+          "nullable": false,
+          "max_length": 64,
+          "statistics": {
+            "unique_ratio": "30.7%",
+            "null_count": 0,
+            "distinct_count": 30704
+          }
+        },
+        {
+          "name": "seller_id",
+          "data_type": "VARCHAR",
+          "nullable": false,
+          "max_length": 64,
+          "statistics": {
+            "unique_ratio": "3.0%",
+            "null_count": 0,
+            "distinct_count": 3026
+          }
+        },
+        {
+          "name": "shipping_limit_date",
+          "data_type": "DATETIME",
+          "nullable": false,
+          "max_length": null,
+          "statistics": {
+            "unique_ratio": "83.4%",
+            "null_count": 0,
+            "distinct_count": 83356
+          }
+        },
+        {
+          "name": "price",
+          "data_type": "DECIMAL",
+          "nullable": false,
+          "max_length": null,
+          "statistics": {
+            "unique_ratio": "5.7%",
+            "null_count": 0,
+            "distinct_count": 5670
+          }
+        },
+        {
+          "name": "freight_value",
+          "data_type": "DECIMAL",
+          "nullable": false,
+          "max_length": null,
+          "statistics": {
+            "unique_ratio": "6.8%",
+            "null_count": 0,
+            "distinct_count": 6754
+          }
+        }
+      ],
+      "foreign_keys": [
+        {
+          "columns": [
+            "order_id"
+          ],
+          "referenced_table": "olist_orders_dataset",
+          "referenced_columns": [
+            "order_id"
+          ],
+          "confidence": "130.0%",
+          "reasoning": "100.0% value overlap with strong relationship indicators"
+        },
+        {
+          "columns": [
+            "product_id"
+          ],
+          "referenced_table": "olist_products_dataset",
+          "referenced_columns": [
+            "product_id"
+          ],
+          "confidence": "130.0%",
+          "reasoning": "100.0% value overlap with strong relationship indicators"
+        },
+        {
+          "columns": [
+            "seller_id"
+          ],
+          "referenced_table": "olist_sellers_dataset",
+          "referenced_columns": [
+            "seller_id"
+          ],
+          "confidence": "130.0%",
+          "reasoning": "100.0% value overlap with strong relationship indicators"
+        }
+      ]
+    },
+    "olist_customers_dataset": {
+      "name": "olist_customers_dataset",
+      "row_count": 99441,
+      "column_count": 5,
+      "primary_key": [
+        "customer_id"
+      ],
+      "foreign_key_count": 0,
+      "columns": [
+        {
+          "name": "customer_id",
+          "data_type": "VARCHAR",
+          "nullable": false,
+          "max_length": 64,
+          "statistics": {
+            "unique_ratio": "100.0%",
+            "null_count": 0,
+            "distinct_count": 99441
+          }
+        },
+        {
+          "name": "customer_unique_id",
+          "data_type": "VARCHAR",
+          "nullable": false,
+          "max_length": 64,
+          "statistics": {
+            "unique_ratio": "96.6%",
+            "null_count": 0,
+            "distinct_count": 96096
+          }
+        },
+        {
+          "name": "customer_zip_code_prefix",
+          "data_type": "INTEGER",
+          "nullable": false,
+          "max_length": null,
+          "statistics": {
+            "unique_ratio": "15.1%",
+            "null_count": 0,
+            "distinct_count": 14994
+          }
+        },
+        {
+          "name": "customer_city",
+          "data_type": "VARCHAR",
+          "nullable": false,
+          "max_length": 50,
+          "statistics": {
+            "unique_ratio": "4.1%",
+            "null_count": 0,
+            "distinct_count": 4119
+          }
+        },
+        {
+          "name": "customer_state",
+          "data_type": "VARCHAR",
+          "nullable": false,
+          "max_length": 4,
+          "statistics": {
+            "unique_ratio": "0.0%",
+            "null_count": 0,
+            "distinct_count": 27
+          }
+        }
+      ],
+      "foreign_keys": []
+    },
+    "olist_geolocation_dataset": {
+      "name": "olist_geolocation_dataset",
+      "row_count": 99999,
+      "column_count": 6,
+      "primary_key": [
+        "id"
+      ],
+      "foreign_key_count": 0,
+      "columns": [
+        {
+          "name": "geolocation_zip_code_prefix",
+          "data_type": "INTEGER",
+          "nullable": false,
+          "max_length": null,
+          "statistics": {
+            "unique_ratio": "2.2%",
+            "null_count": 0,
+            "distinct_count": 2210
+          }
+        },
+        {
+          "name": "geolocation_lat",
+          "data_type": "DECIMAL",
+          "nullable": false,
+          "max_length": null,
+          "statistics": {
+            "unique_ratio": "55.1%",
+            "null_count": 0,
+            "distinct_count": 55144
+          }
+        },
+        {
+          "name": "geolocation_lng",
+          "data_type": "DECIMAL",
+          "nullable": false,
+          "max_length": null,
+          "statistics": {
+            "unique_ratio": "55.2%",
+            "null_count": 0,
+            "distinct_count": 55190
+          }
+        },
+        {
+          "name": "geolocation_city",
+          "data_type": "VARCHAR",
+          "nullable": false,
+          "max_length": 18,
+          "statistics": {
+            "unique_ratio": "0.0%",
+            "null_count": 0,
+            "distinct_count": 7
+          }
+        },
+        {
+          "name": "geolocation_state",
+          "data_type": "VARCHAR",
+          "nullable": false,
+          "max_length": 4,
+          "statistics": {
+            "unique_ratio": "0.0%",
+            "null_count": 0,
+            "distinct_count": 3
+          }
+        },
+        {
+          "name": "id",
+          "data_type": "INTEGER",
+          "nullable": false,
+          "max_length": null,
+          "statistics": {
+            "unique_ratio": "100.0%",
+            "null_count": 0,
+            "distinct_count": 99999
+          }
+        }
+      ],
+      "foreign_keys": []
+    },
+    "olist_order_payments_dataset": {
+      "name": "olist_order_payments_dataset",
+      "row_count": 99999,
+      "column_count": 5,
+      "primary_key": [
+        "order_id"
+      ],
+      "foreign_key_count": 1,
+      "columns": [
+        {
+          "name": "order_id",
+          "data_type": "VARCHAR",
+          "nullable": false,
+          "max_length": 64,
+          "statistics": {
+            "unique_ratio": "95.8%",
+            "null_count": 0,
+            "distinct_count": 95838
+          }
+        },
+        {
+          "name": "payment_sequential",
+          "data_type": "BOOLEAN",
+          "nullable": false,
+          "max_length": null,
+          "statistics": {
+            "unique_ratio": "0.0%",
+            "null_count": 0,
+            "distinct_count": 29
+          }
+        },
+        {
+          "name": "payment_type",
+          "data_type": "VARCHAR",
+          "nullable": false,
+          "max_length": 22,
+          "statistics": {
+            "unique_ratio": "0.0%",
+            "null_count": 0,
+            "distinct_count": 5
+          }
+        },
+        {
+          "name": "payment_installments",
+          "data_type": "INTEGER",
+          "nullable": false,
+          "max_length": null,
+          "statistics": {
+            "unique_ratio": "0.0%",
+            "null_count": 0,
+            "distinct_count": 24
+          }
+        },
+        {
+          "name": "payment_value",
+          "data_type": "DECIMAL",
+          "nullable": false,
+          "max_length": null,
+          "statistics": {
+            "unique_ratio": "28.6%",
+            "null_count": 0,
+            "distinct_count": 28614
+          }
+        }
+      ],
+      "foreign_keys": [
+        {
+          "columns": [
+            "order_id"
+          ],
+          "referenced_table": "olist_orders_dataset",
+          "referenced_columns": [
+            "order_id"
+          ],
+          "confidence": "130.0%",
+          "reasoning": "100.0% value overlap with strong relationship indicators"
+        }
+      ]
+    },
+    "olist_order_reviews_dataset": {
+      "name": "olist_order_reviews_dataset",
+      "row_count": 94794,
+      "column_count": 7,
+      "primary_key": [
+        "review_id"
+      ],
+      "foreign_key_count": 1,
+      "columns": [
+        {
+          "name": "review_id",
+          "data_type": "VARCHAR",
+          "nullable": false,
+          "max_length": 64,
+          "statistics": {
+            "unique_ratio": "99.2%",
+            "null_count": 0,
+            "distinct_count": 94055
+          }
+        },
+        {
+          "name": "order_id",
+          "data_type": "VARCHAR",
+          "nullable": false,
+          "max_length": 64,
+          "statistics": {
+            "unique_ratio": "99.5%",
+            "null_count": 0,
+            "distinct_count": 94293
+          }
+        },
+        {
+          "name": "review_score",
+          "data_type": "INTEGER",
+          "nullable": false,
+          "max_length": null,
+          "statistics": {
+            "unique_ratio": "0.0%",
+            "null_count": 0,
+            "distinct_count": 5
+          }
+        },
+        {
+          "name": "review_comment_title",
+          "data_type": "VARCHAR",
+          "nullable": true,
+          "max_length": 50,
+          "statistics": {
+            "unique_ratio": "36.5%",
+            "null_count": 83714,
+            "distinct_count": 4042
+          }
+        },
+        {
+          "name": "review_comment_message",
+          "data_type": "VARCHAR",
+          "nullable": true,
+          "max_length": 255,
+          "statistics": {
+            "unique_ratio": "87.1%",
+            "null_count": 55699,
+            "distinct_count": 34043
+          }
+        },
+        {
+          "name": "review_creation_date",
+          "data_type": "DATETIME",
+          "nullable": false,
+          "max_length": null,
+          "statistics": {
+            "unique_ratio": "0.7%",
+            "null_count": 0,
+            "distinct_count": 636
+          }
+        },
+        {
+          "name": "review_answer_timestamp",
+          "data_type": "DATETIME",
+          "nullable": false,
+          "max_length": null,
+          "statistics": {
+            "unique_ratio": "99.1%",
+            "null_count": 0,
+            "distinct_count": 93904
+          }
+        }
+      ],
+      "foreign_keys": [
+        {
+          "columns": [
+            "order_id"
+          ],
+          "referenced_table": "olist_orders_dataset",
+          "referenced_columns": [
+            "order_id"
+          ],
+          "confidence": "130.0%",
+          "reasoning": "100.0% value overlap with strong relationship indicators"
+        }
+      ]
+    },
+    "olist_products_dataset": {
+      "name": "olist_products_dataset",
+      "row_count": 32951,
+      "column_count": 9,
+      "primary_key": [
+        "product_id"
+      ],
+      "foreign_key_count": 1,
+      "columns": [
+        {
+          "name": "product_id",
+          "data_type": "VARCHAR",
+          "nullable": false,
+          "max_length": 64,
+          "statistics": {
+            "unique_ratio": "100.0%",
+            "null_count": 0,
+            "distinct_count": 32951
+          }
+        },
+        {
+          "name": "product_category_name",
+          "data_type": "VARCHAR",
+          "nullable": true,
+          "max_length": 92,
+          "statistics": {
+            "unique_ratio": "0.2%",
+            "null_count": 610,
+            "distinct_count": 73
+          }
+        },
+        {
+          "name": "product_name_lenght",
+          "data_type": "INTEGER",
+          "nullable": true,
+          "max_length": null,
+          "statistics": {
+            "unique_ratio": "0.2%",
+            "null_count": 610,
+            "distinct_count": 66
+          }
+        },
+        {
+          "name": "product_description_lenght",
+          "data_type": "INTEGER",
+          "nullable": true,
+          "max_length": null,
+          "statistics": {
+            "unique_ratio": "9.2%",
+            "null_count": 610,
+            "distinct_count": 2960
+          }
+        },
+        {
+          "name": "product_photos_qty",
+          "data_type": "INTEGER",
+          "nullable": true,
+          "max_length": null,
+          "statistics": {
+            "unique_ratio": "0.1%",
+            "null_count": 610,
+            "distinct_count": 19
+          }
+        },
+        {
+          "name": "product_weight_g",
+          "data_type": "INTEGER",
+          "nullable": true,
+          "max_length": null,
+          "statistics": {
+            "unique_ratio": "6.7%",
+            "null_count": 2,
+            "distinct_count": 2204
+          }
+        },
+        {
+          "name": "product_length_cm",
+          "data_type": "INTEGER",
+          "nullable": true,
+          "max_length": null,
+          "statistics": {
+            "unique_ratio": "0.3%",
+            "null_count": 2,
+            "distinct_count": 99
+          }
+        },
+        {
+          "name": "product_height_cm",
+          "data_type": "INTEGER",
+          "nullable": true,
+          "max_length": null,
+          "statistics": {
+            "unique_ratio": "0.3%",
+            "null_count": 2,
+            "distinct_count": 102
+          }
+        },
+        {
+          "name": "product_width_cm",
+          "data_type": "INTEGER",
+          "nullable": true,
+          "max_length": null,
+          "statistics": {
+            "unique_ratio": "0.3%",
+            "null_count": 2,
+            "distinct_count": 95
+          }
+        }
+      ],
+      "foreign_keys": [
+        {
+          "columns": [
+            "product_category_name"
+          ],
+          "referenced_table": "product_category_name_translation",
+          "referenced_columns": [
+            "product_category_name"
+          ],
+          "confidence": "128.1%",
+          "reasoning": "97.3% value overlap with strong relationship indicators"
+        }
+      ]
+    }
+  },
+  "normalization_suggestions": [
+    {
+      "table_name": "olist_orders_dataset",
+      "suggestion_type": "3NF",
+      "description": "Transitive dependency detected: order_estimated_delivery_date, order_purchase_timestamp, order_status, order_delivered_customer_date, order_approved_at, order_delivered_carrier_date depends on customer_id, creating transitive dependency through primary key. Consider extracting to a separate 'customer_id_details' table with columns: customer_id, order_estimated_delivery_date, order_purchase_timestamp, order_status, order_delivered_customer_date, order_approved_at, order_delivered_carrier_date.",
+      "confidence": "100.0%"
+    },
+    {
+      "table_name": "olist_order_items_dataset",
+      "suggestion_type": "2NF",
+      "description": "Column 'product_id' has partial dependency on 'order_id' (part of composite key ['order_id', 'order_item_id']) instead of depending on the full key (strength: 96.7%). Consider extracting to a separate 'order_product_id' table with columns: order_id, product_id.",
+      "confidence": "96.7%"
+    },
+    {
+      "table_name": "olist_order_items_dataset",
+      "suggestion_type": "2NF",
+      "description": "Column 'seller_id' has partial dependency on 'order_id' (part of composite key ['order_id', 'order_item_id']) instead of depending on the full key (strength: 98.7%). Consider extracting to a separate 'order_seller_id' table with columns: order_id, seller_id.",
+      "confidence": "98.7%"
+    },
+    {
+      "table_name": "olist_order_items_dataset",
+      "suggestion_type": "2NF",
+      "description": "Column 'shipping_limit_date' has partial dependency on 'order_id' (part of composite key ['order_id', 'order_item_id']) instead of depending on the full key (strength: 99.7%). Consider extracting to a separate 'order_shipping_limit_date' table with columns: order_id, shipping_limit_date.",
+      "confidence": "99.7%"
+    },
+    {
+      "table_name": "olist_order_items_dataset",
+      "suggestion_type": "2NF",
+      "description": "Column 'price' has partial dependency on 'order_id' (part of composite key ['order_id', 'order_item_id']) instead of depending on the full key (strength: 97.6%). Consider extracting to a separate 'order_price' table with columns: order_id, price.",
+      "confidence": "97.6%"
+    },
+    {
+      "table_name": "olist_order_items_dataset",
+      "suggestion_type": "2NF",
+      "description": "Column 'freight_value' has partial dependency on 'order_id' (part of composite key ['order_id', 'order_item_id']) instead of depending on the full key (strength: 97.9%). Consider extracting to a separate 'order_freight_value' table with columns: order_id, freight_value.",
+      "confidence": "97.9%"
+    },
+    {
+      "table_name": "olist_customers_dataset",
+      "suggestion_type": "3NF",
+      "description": "Transitive dependency detected: customer_state depends on customer_zip_code_prefix, creating transitive dependency through primary key. Consider extracting to a separate 'customer_zip_code_prefix_details' table with columns: customer_zip_code_prefix, customer_state.",
+      "confidence": "93.0%"
+    },
+    {
+      "table_name": "olist_order_reviews_dataset",
+      "suggestion_type": "1NF",
+      "description": "Column 'review_comment_message' contains multi-valued data in 38.9% of rows. Consider splitting into separate columns or creating a separate 'review_comment_message_values' table.",
+      "confidence": "38.9%"
+    }
+  ]
+}

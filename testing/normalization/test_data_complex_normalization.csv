@@ -1,0 +1,13 @@
+StudentID,CourseID,StudentName,CourseName,Instructor,Prerequisites,Credits,ProjectTopic,ProjectSupervisor,SupervisorOffice
+S001,CS101,John Doe,Introduction to Programming,Dr. Smith,None,3,Web Application,Dr. Adams,ENGR-301
+S001,MATH201,John Doe,Calculus I,Prof. Johnson,MATH101,4,Research Paper,Dr. Brown,MATH-205
+S001,CS201,John Doe,Data Structures,Dr. Smith,"CS101,MATH101",3,Algorithm Analysis,Dr. Adams,ENGR-301
+S002,CS101,Jane Smith,Introduction to Programming,Dr. Smith,None,3,Web Application,Dr. Wilson,ENGR-402
+S002,ENG101,Jane Smith,English Literature,Prof. Brown,None,3,Essay Writing,Dr. Davis,HUMN-104
+S002,MATH201,Jane Smith,Calculus I,Prof. Johnson,MATH101,4,Research Paper,Dr. Brown,MATH-205
+S003,MATH201,Bob Wilson,Calculus I,Prof. Johnson,MATH101,4,Research Paper,Dr. Evans,MATH-312
+S003,CS101,Bob Wilson,Introduction to Programming,Dr. Smith,None,3,Web Application,Dr. Adams,ENGR-301
+S003,ENG101,Bob Wilson,English Literature,Prof. Brown,None,3,Essay Writing,Dr. Davis,HUMN-104
+S004,ENG101,Alice Davis,English Literature,Prof. Brown,None,3,Essay Writing,Dr. Taylor,HUMN-201
+S004,MATH201,Alice Davis,Calculus I,Prof. Johnson,MATH101,4,Research Paper,Dr. Evans,MATH-312
+S005,CS201,Charlie Brown,Data Structures,Dr. Smith,"CS101,MATH101",3,Algorithm Analysis,Dr. Wilson,ENGR-402

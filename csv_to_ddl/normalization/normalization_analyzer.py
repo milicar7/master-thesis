@@ -35,11 +35,11 @@ class NormalizationAnalyzer:
             suggestions.extend(first_nf_violations)
 
             if not first_nf_violations:
-                second_nf_violations = self.second_nf.check(table_name, table_spec, table_data, table_headers)
+                second_nf_violations = self.second_nf.check(table_name, table_data, table_headers, table_spec)
                 suggestions.extend(second_nf_violations)
 
                 if not second_nf_violations:
-                    third_nf_violations = self.third_nf.check(table_name, table_spec, table_data, table_headers)
+                    third_nf_violations = self.third_nf.check(table_name, table_data, table_headers, table_spec)
                     suggestions.extend(third_nf_violations)
                 else:
                     self.logger.info(f"Skipping 3NF check for table '{table_name}' due to 2NF violations")

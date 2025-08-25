@@ -1,5 +1,5 @@
 from abc import ABC, abstractmethod
-from typing import Dict, List, Optional
+from typing import List
 
 from csv_to_ddl.models.normalization import NormalizationSuggestion
 from csv_to_ddl.models.table import TableSpec
@@ -11,7 +11,7 @@ class NormalForm(ABC):
 
     @abstractmethod
     def check(self, table_name: str,
-              table_spec: Optional[TableSpec] = None,
-              tables_data: Optional[Dict[str, List[List[str]]]] = None,
-              tables_headers: Optional[Dict[str, List[str]]] = None) -> List[NormalizationSuggestion]:
+              rows: List[List[str]],
+              headers: List[str],
+              table_spec: TableSpec) -> List[NormalizationSuggestion]:
         pass

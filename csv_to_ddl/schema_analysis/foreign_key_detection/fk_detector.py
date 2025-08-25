@@ -21,9 +21,12 @@ class ForeignKeyDetector:
 
         for table_name, table_spec in table_specs.items():
             table_spec.foreign_keys = []
+            
+            table_data = tables_data.get(table_name, [])
+            table_headers = reference_keys.get(table_name, {}).get('headers', [])
 
-            single_fks = detect_single_column_foreign_keys(table_name, table_spec, reference_keys, tables_data, self.config)
-            composite_fks = detect_composite_foreign_keys(table_name, table_spec, reference_keys, tables_data, self.config)
+            single_fks = detect_single_column_foreign_keys(table_name, table_spec, reference_keys, table_data, table_headers, self.config)
+            composite_fks = detect_composite_foreign_keys(table_name, table_spec, reference_keys, table_data, table_headers, self.config)
             all_fks = single_fks + composite_fks
 
             for fk in all_fks:

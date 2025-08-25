@@ -134,33 +134,33 @@
     },
     "product_category_name_translation": {
       "name": "product_category_name_translation",
-      "row_count": 72,
+      "row_count": 71,
       "column_count": 2,
       "primary_key": [
-        "column_1"
+        "product_category_name"
       ],
       "foreign_key_count": 0,
       "columns": [
         {
-          "name": "column_1",
+          "name": "product_category_name",
           "data_type": "VARCHAR",
           "nullable": false,
           "max_length": 92,
           "statistics": {
             "unique_ratio": "100.0%",
             "null_count": 0,
-            "distinct_count": 72
+            "distinct_count": 71
           }
         },
         {
-          "name": "column_2",
+          "name": "product_category_name_english",
           "data_type": "VARCHAR",
           "nullable": false,
           "max_length": 78,
           "statistics": {
             "unique_ratio": "100.0%",
             "null_count": 0,
-            "distinct_count": 72
+            "distinct_count": 71
           }
         }
       ],
@@ -843,9 +843,9 @@
           ],
           "referenced_table": "product_category_name_translation",
           "referenced_columns": [
-            "column_1"
+            "product_category_name"
           ],
-          "confidence": "110.1%",
+          "confidence": "128.1%",
           "reasoning": "97.3% value overlap with strong relationship indicators"
         }
       ]
@@ -855,7 +855,7 @@
     {
       "table_name": "olist_orders_dataset",
       "suggestion_type": "3NF",
-      "description": "Transitive dependency detected: order_purchase_timestamp, order_status, order_delivered_carrier_date, order_estimated_delivery_date, order_delivered_customer_date, order_approved_at depends on customer_id, creating transitive dependency through primary key. Consider extracting to a separate 'customer_id_details' table with columns: customer_id, order_purchase_timestamp, order_status, order_delivered_carrier_date, order_estimated_delivery_date, order_delivered_customer_date, order_approved_at.",
+      "description": "Transitive dependency detected: order_delivered_customer_date, order_purchase_timestamp, order_delivered_carrier_date, order_estimated_delivery_date, order_status, order_approved_at depends on customer_id, creating transitive dependency through primary key. Consider extracting to a separate 'customer_id_details' table with columns: customer_id, order_delivered_customer_date, order_purchase_timestamp, order_delivered_carrier_date, order_estimated_delivery_date, order_status, order_approved_at.",
       "confidence": "100.0%"
     },
     {
@@ -897,8 +897,8 @@
     {
       "table_name": "olist_order_reviews_dataset",
       "suggestion_type": "1NF",
-      "description": "Column 'review_comment_message' contains multi-valued data in 38.8% of rows. Consider splitting into separate columns or creating a separate 'review_comment_message_values' table.",
-      "confidence": "38.8%"
+      "description": "Column 'review_comment_message' contains multi-valued data in 38.9% of rows. Consider splitting into separate columns or creating a separate 'review_comment_message_values' table.",
+      "confidence": "38.9%"
     }
   ]
 }

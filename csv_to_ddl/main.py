@@ -32,23 +32,19 @@ def csv_to_ddl():
             logger.error(f"Input path does not exist: {args.input}")
             return 1
 
-        # Setup
         ConfigManager.initialize(DefaultConfigProvider())
         dialect = DatabaseDialect(args.dialect)
         converter = CSVToDDLConverter()
 
-        # Output
-        results = converter.convert(input_path=args.input,
-                                    dialect=dialect)
+        results = converter.convert(input_path=args.input, dialect=dialect)
 
-        converter.output_ddl(args.output, results)
-
+        converter.output_ddl(args.output, results['ddl'])
         if args.report:
             json_reporter = JsonReporter()
             json_reporter.generate_report(results, args.report)
 
         summary_reporter = SummaryReporter()
-        summary_reporter.print_summary(results)
+        summary_reporter.print_summary(results['statistics'])
 
         return 0
 

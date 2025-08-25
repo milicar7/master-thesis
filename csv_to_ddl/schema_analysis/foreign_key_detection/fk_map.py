@@ -4,10 +4,9 @@ from csv_to_ddl.config.default_config import KeyConfig
 from csv_to_ddl.models.table import TableSpec
 
 
-def get_table_headers(table_name: str, table_specs: Dict[str, TableSpec]) -> List[str]:
-    table_spec = table_specs.get(table_name)
-    if table_spec:
-        return [col.name for col in table_spec.columns]
+def get_table_headers(columns: List) -> List[str]:
+    if columns:
+        return [col.name for col in columns]
     return []
 
 
@@ -32,10 +31,9 @@ def get_single_column_values_from_data(column_name: str,
     return values
 
 
-def get_composite_values_from_data(table_name: str, column_names: List[str],
-                                   tables_data: Dict[str, List[List[str]]],
+def get_composite_values_from_data(column_names: List[str],
+                                   table_data: List[List[str]],
                                    table_headers: List[str]) -> Set[Tuple[str, ...]]:
-    table_data = tables_data.get(table_name, [])
     if not table_data or not table_headers:
         return set()
 
@@ -63,7 +61,7 @@ def build_reference_keys_map(table_specs: Dict[str, TableSpec],
         reference_keys[table_name] = {
             'single_keys': {},
             'composite_keys': {},
-            'headers': get_table_headers(table_name, table_specs),
+            'headers': get_table_headers(table_spec.columns),
             'primary_key_columns': set()
         }
 
@@ -81,7 +79,7 @@ def build_reference_keys_map(table_specs: Dict[str, TableSpec],
                 if pk_values:
                     reference_keys[table_name]['single_keys'][pk_columns[0]] = pk_values
             else:
-                pk_values = get_composite_values_from_data(table_name, pk_columns, tables_data, table_headers)
+                pk_values = get_composite_values_from_data(pk_columns, table_data, table_headers)
                 if pk_values:
                     reference_keys[table_name]['composite_keys'][tuple(pk_columns)] = pk_values
 

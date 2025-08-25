@@ -3,8 +3,9 @@ from typing import List, Tuple
 
 from csv_to_ddl.config.default_config import CSVConfig, TypeConfig
 from csv_to_ddl.models.dialects import DataType
-from csv_to_ddl.schema_analysis.type_detection.type_name import (detect_column_type, is_date, is_datetime, is_integer, is_decimal,
-                                                      is_float)
+from csv_to_ddl.schema_analysis.type_detection.type_name import (detect_column_type, is_date, is_datetime, is_integer,
+                                                                 is_decimal,
+                                                                 is_float)
 
 
 def calculate_header_indicators_score(cell_str: str, config: CSVConfig) -> float:

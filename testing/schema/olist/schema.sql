@@ -1,5 +1,5 @@
 -- Generated DDL for postgresql
--- Generated at: 2025-08-25T10:15:56.827807
+-- Generated at: 2025-08-25T13:13:09.181623
 
 CREATE TABLE "olist_sellers_dataset" (
     "seller_id" VARCHAR(64) NOT NULL,
@@ -10,9 +10,9 @@ CREATE TABLE "olist_sellers_dataset" (
 );
 
 CREATE TABLE "product_category_name_translation" (
-    "column_1" VARCHAR(92) NOT NULL,
-    "column_2" VARCHAR(78) NOT NULL,
-    PRIMARY KEY ("column_1")
+    "product_category_name" VARCHAR(92) NOT NULL,
+    "product_category_name_english" VARCHAR(78) NOT NULL,
+    PRIMARY KEY ("product_category_name")
 );
 
 CREATE TABLE "olist_orders_dataset" (
@@ -94,5 +94,5 @@ CREATE TABLE "olist_products_dataset" (
     "product_height_cm" INTEGER,
     "product_width_cm" INTEGER,
     PRIMARY KEY ("product_id"),
-    FOREIGN KEY ("product_category_name") REFERENCES "product_category_name_translation" ("column_1")
+    FOREIGN KEY ("product_category_name") REFERENCES "product_category_name_translation" ("product_category_name")
 );

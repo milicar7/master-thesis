@@ -1,5 +1,5 @@
 import logging
-from typing import Dict, List, Optional
+from typing import Dict, List
 
 from csv_to_ddl.config.default_config import NormalizationConfig
 from csv_to_ddl.models.normalization import NormalizationSuggestion
@@ -15,9 +15,9 @@ class SecondNormalForm(NormalForm):
         self.logger = logging.getLogger(__name__)
 
     def check(self, table_name: str,
-              table_spec: TableSpec,
               rows: List[List[str]],
-              headers: List[str]) -> List[NormalizationSuggestion]:
+              headers: List[str],
+              table_spec: TableSpec) -> List[NormalizationSuggestion]:
         """Check for Second Normal Form violations (partial dependencies)"""
         suggestions = []
 
@@ -32,7 +32,7 @@ class SecondNormalForm(NormalForm):
         return suggestions
 
     @staticmethod
-    def _should_check_2nf(table_spec: Optional[TableSpec]) -> bool:
+    def _should_check_2nf(table_spec: TableSpec) -> bool:
         if not table_spec:
             return False
         return table_spec.primary_key and len(table_spec.primary_key.columns) > 1

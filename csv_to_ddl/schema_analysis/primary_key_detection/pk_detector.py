@@ -15,8 +15,7 @@ class PrimaryKeyDetector:
         self.config = ConfigManager.get_key_config()
         self.logger = logging.getLogger(__name__)
 
-    def detect_primary_key(self, table_spec: TableSpec, rows: List[List[str]], headers: List[str]) -> Tuple[
-        Optional[PrimaryKeySpec], Optional[ColumnSpec]]:
+    def detect_primary_key(self, table_spec: TableSpec, rows: List[List[str]], headers: List[str]) -> Tuple[Optional[PrimaryKeySpec], Optional[ColumnSpec]]:
         natural_pk = detect_single_key(table_spec, self.config)
         if natural_pk:
             self.logger.info(f"Natural primary key detected for {table_spec.name}: {natural_pk.columns}")

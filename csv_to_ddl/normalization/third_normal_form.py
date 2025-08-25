@@ -1,5 +1,5 @@
 import logging
-from typing import List, Optional, Dict
+from typing import List, Dict
 
 from csv_to_ddl.config.default_config import NormalizationConfig
 from csv_to_ddl.models.normalization import NormalizationSuggestion
@@ -15,9 +15,9 @@ class ThirdNormalForm(NormalForm):
         self.logger = logging.getLogger(__name__)
 
     def check(self, table_name: str,
-              table_spec: TableSpec,
               rows: List[List[str]],
-              headers: List[str]) -> List[NormalizationSuggestion]:
+              headers: List[str],
+              table_spec: TableSpec)  -> List[NormalizationSuggestion]:
         """
         Check for Third Normal Form violations by detecting transitive dependencies.
         

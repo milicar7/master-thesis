@@ -11,11 +11,10 @@ logger = logging.getLogger(__name__)
 
 def detect_single_column_foreign_keys(table_name: str, table_spec: TableSpec,
                                       reference_keys: Dict[str, Dict],
-                                      tables_data: Dict[str, List[List[str]]],
+                                      table_data: List[List[str]],
+                                      table_headers: List[str],
                                       config: KeyConfig) -> List[ForeignKeySpec]:
     foreign_keys = []
-    table_headers = reference_keys.get(table_name, {}).get('headers', [])
-    table_data = tables_data.get(table_name, [])
 
     for col in table_spec.columns:
         col_values = get_single_column_values_from_data(col.name, table_data, table_headers)
@@ -60,7 +59,9 @@ def _calculate_match_score(col_values: Set[str], ref_values: Set[str],
     if not is_valid:
         return 0.0, overlap_ratio
 
-    pk_bonus = _get_primary_key_bonus(ref_col_name, ref_table, reference_keys, config)
+    ref_table_data = reference_keys.get(ref_table, {})
+    pk_columns = ref_table_data.get('primary_key_columns', set())
+    pk_bonus = _get_primary_key_bonus(ref_col_name, pk_columns, config)
 
     naming_score = _get_naming_score(col_name, ref_col_name, ref_table, config)
     is_generic_column = (_is_generic_column_name(col_name) and _is_generic_column_name(ref_col_name))
@@ -129,9 +130,7 @@ def _get_naming_score(col_name: str, ref_col_name: str, ref_table: str, config: 
     return 0.0
 
 
-def _get_primary_key_bonus(ref_col_name: str, ref_table: str, reference_keys: Dict[str, Dict], config: KeyConfig) -> float:
-    ref_table_data = reference_keys.get(ref_table, {})
-    pk_columns = ref_table_data.get('primary_key_columns', set())
+def _get_primary_key_bonus(ref_col_name: str, pk_columns: set, config: KeyConfig) -> float:
 
     if ref_col_name in pk_columns:
         return config.fk_primary_key_target_bonus

@@ -9,8 +9,7 @@ class SummaryReporter:
     def __init__(self):
         self.logger = logging.getLogger(__name__)
 
-    def print_summary(self, results: Dict[str, Any]) -> None:
-        stats = results['statistics']
+    def print_summary(self, stats: Dict[str, Any]) -> None:
 
         self.logger.info("=" * 50)
         self.logger.info("CONVERSION SUMMARY")

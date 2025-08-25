@@ -1,7 +1,7 @@
 from typing import Optional
 
-from csv_to_ddl.config.default_config import CSVConfig, KeyConfig, TypeConfig, NormalizationConfig
 from csv_to_ddl.config.config_provider import ConfigProvider, DefaultConfigProvider
+from csv_to_ddl.config.default_config import CSVConfig, KeyConfig, TypeConfig, NormalizationConfig
 
 
 class ConfigManager:

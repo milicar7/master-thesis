@@ -43,13 +43,13 @@ class CSVToDDLConverter:
 
         return results
 
-    def output_ddl(self, output, results):
+    def output_ddl(self, output, ddl):
         if output:
             with open(output, 'w', encoding='utf-8') as f:
-                f.write(results['ddl'])
+                f.write(ddl)
             self.logger.info(f"DDL written to {output}")
         else:
-            print(results['ddl'])
+            print(ddl)
 
     @staticmethod
     def _compile_statistics(tables_specs: Dict[str, TableSpec],

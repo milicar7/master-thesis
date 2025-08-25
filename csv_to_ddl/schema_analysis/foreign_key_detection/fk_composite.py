@@ -10,10 +10,10 @@ logger = logging.getLogger(__name__)
 
 def detect_composite_foreign_keys(table_name: str, table_spec: TableSpec,
                                   reference_keys: Dict[str, Dict],
-                                  tables_data: Dict[str, List[List[str]]],
+                                  table_data: List[List[str]],
+                                  table_headers: List[str],
                                   config: KeyConfig) -> List[ForeignKeySpec]:
     foreign_keys = []
-    table_headers = reference_keys.get(table_name, {}).get('headers', [])
 
     composite_pk_patterns = _get_composite_pk_patterns(reference_keys, table_name)
 
@@ -21,9 +21,10 @@ def detect_composite_foreign_keys(table_name: str, table_spec: TableSpec,
         matching_columns = _find_matching_columns(table_spec, ref_columns)
 
         if matching_columns:
-            best_match = _evaluate_composite_match(table_name, matching_columns,
+            ref_composite_keys = reference_keys[ref_table]['composite_keys']
+            best_match = _evaluate_composite_match(matching_columns,
                                                    ref_table, ref_columns,
-                                                   reference_keys, tables_data,
+                                                   ref_composite_keys, table_data,
                                                    table_headers, config)
 
             if best_match:
@@ -61,14 +62,14 @@ def _find_matching_columns(table_spec: TableSpec, target_columns: List[str]) -> 
     return matching if len(matching) == len(target_columns) else []
 
 
-def _evaluate_composite_match(table_name: str, source_columns: List[str],
+def _evaluate_composite_match(source_columns: List[str],
                               ref_table: str, ref_columns: List[str],
-                              reference_keys: Dict[str, Dict],
-                              tables_data: Dict[str, List[List[str]]],
+                              ref_composite_keys: Dict,
+                              table_data: List[List[str]],
                               table_headers: List[str],
                               config: KeyConfig) -> Optional[ForeignKeySpec]:
-    source_values = get_composite_values_from_data(table_name, source_columns, tables_data, table_headers)
-    ref_values = reference_keys[ref_table]['composite_keys'].get(tuple(ref_columns))
+    source_values = get_composite_values_from_data(source_columns, table_data, table_headers)
+    ref_values = ref_composite_keys.get(tuple(ref_columns))
 
     if not source_values or not ref_values:
         return None

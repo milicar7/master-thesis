@@ -1,5 +1,5 @@
 import logging
-from typing import Dict, List, Optional
+from typing import List
 
 from csv_to_ddl.models.normalization import NormalizationSuggestion
 from csv_to_ddl.models.table import TableSpec
@@ -15,7 +15,7 @@ class FirstNormalForm(NormalForm):
     def check(self, table_name: str, 
               rows: List[List[str]],
               headers: List[str],
-              table_spec: Optional[TableSpec] = None) -> List[NormalizationSuggestion]:
+              table_spec: TableSpec = None) -> List[NormalizationSuggestion]:
         """Check for First Normal Form violations (multivalued attributes)"""
         suggestions = []
 

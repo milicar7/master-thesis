@@ -55,8 +55,8 @@ def test_second_normal_form():
     suggestions = analyzer.check(
         table_name="student_course",
         table_spec=table_spec,
-        tables_data=tables_data,
-        tables_headers=tables_headers
+        rows=rows,
+        headers=headers
     )
 
     if suggestions:

@@ -15,9 +15,10 @@ def detect_single_column_foreign_keys(table_name: str, table_spec: TableSpec,
                                       config: KeyConfig) -> List[ForeignKeySpec]:
     foreign_keys = []
     table_headers = reference_keys.get(table_name, {}).get('headers', [])
+    table_data = tables_data.get(table_name, [])
 
     for col in table_spec.columns:
-        col_values = get_single_column_values_from_data(table_name, col.name, tables_data, table_headers)
+        col_values = get_single_column_values_from_data(col.name, table_data, table_headers)
         if not col_values:
             continue
 

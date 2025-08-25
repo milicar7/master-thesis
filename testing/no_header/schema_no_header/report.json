@@ -384,91 +384,91 @@
     {
       "table_name": "customers",
       "suggestion_type": "3NF",
-      "description": "Transitive dependency detected: column_4, column_3 depends on column_2, creating transitive dependency through primary key. Consider extracting to a separate 'column_2_details' table with columns: column_2, column_4, column_3.",
+      "description": "Transitive dependency detected: column_4 depends on column_3, creating transitive dependency through primary key. Consider extracting to a separate 'column_3_details' table with columns: column_3, column_4.",
       "confidence": "100.0%"
     },
     {
       "table_name": "customers",
       "suggestion_type": "3NF",
-      "description": "Transitive dependency detected: column_4 depends on column_3, creating transitive dependency through primary key. Consider extracting to a separate 'column_3_details' table with columns: column_3, column_4.",
+      "description": "Transitive dependency detected: column_3, column_4 depends on column_2, creating transitive dependency through primary key. Consider extracting to a separate 'column_2_details' table with columns: column_2, column_3, column_4.",
       "confidence": "100.0%"
     },
     {
       "table_name": "products",
       "suggestion_type": "3NF",
-      "description": "Transitive dependency detected: column_4, column_5, column_2, column_3, column_6, column_7, column_9 depends on column_8, creating transitive dependency through primary key. Consider extracting to a separate 'column_8_details' table with columns: column_8, column_4, column_5, column_2, column_3, column_6, column_7, column_9.",
+      "description": "Transitive dependency detected: column_7, column_3, column_4, column_5, column_2, column_8, column_9 depends on column_6, creating transitive dependency through primary key. Consider extracting to a separate 'column_6_details' table with columns: column_6, column_7, column_3, column_4, column_5, column_2, column_8, column_9.",
       "confidence": "100.0%"
     },
     {
       "table_name": "products",
       "suggestion_type": "3NF",
-      "description": "Transitive dependency detected: column_8, column_5, column_2, column_3, column_6, column_7, column_9 depends on column_4, creating transitive dependency through primary key. Consider extracting to a separate 'column_4_details' table with columns: column_4, column_8, column_5, column_2, column_3, column_6, column_7, column_9.",
+      "description": "Transitive dependency detected: column_6, column_3, column_4, column_5, column_2, column_8, column_9 depends on column_7, creating transitive dependency through primary key. Consider extracting to a separate 'column_7_details' table with columns: column_7, column_6, column_3, column_4, column_5, column_2, column_8, column_9.",
       "confidence": "100.0%"
     },
     {
       "table_name": "products",
       "suggestion_type": "3NF",
-      "description": "Transitive dependency detected: column_8, column_4, column_5, column_3, column_6, column_7, column_9 depends on column_2, creating transitive dependency through primary key. Consider extracting to a separate 'column_2_details' table with columns: column_2, column_8, column_4, column_5, column_3, column_6, column_7, column_9.",
+      "description": "Transitive dependency detected: column_6, column_7, column_4, column_5, column_2, column_8, column_9 depends on column_3, creating transitive dependency through primary key. Consider extracting to a separate 'column_3_details' table with columns: column_3, column_6, column_7, column_4, column_5, column_2, column_8, column_9.",
       "confidence": "100.0%"
     },
     {
       "table_name": "products",
       "suggestion_type": "3NF",
-      "description": "Transitive dependency detected: column_8, column_4, column_5, column_2, column_6, column_7, column_9 depends on column_3, creating transitive dependency through primary key. Consider extracting to a separate 'column_3_details' table with columns: column_3, column_8, column_4, column_5, column_2, column_6, column_7, column_9.",
+      "description": "Transitive dependency detected: column_6, column_7, column_3, column_5, column_2, column_8, column_9 depends on column_4, creating transitive dependency through primary key. Consider extracting to a separate 'column_4_details' table with columns: column_4, column_6, column_7, column_3, column_5, column_2, column_8, column_9.",
       "confidence": "100.0%"
     },
     {
       "table_name": "products",
       "suggestion_type": "3NF",
-      "description": "Transitive dependency detected: column_8, column_4, column_5, column_2, column_3, column_7, column_9 depends on column_6, creating transitive dependency through primary key. Consider extracting to a separate 'column_6_details' table with columns: column_6, column_8, column_4, column_5, column_2, column_3, column_7, column_9.",
+      "description": "Transitive dependency detected: column_6, column_7, column_3, column_4, column_5, column_8, column_9 depends on column_2, creating transitive dependency through primary key. Consider extracting to a separate 'column_2_details' table with columns: column_2, column_6, column_7, column_3, column_4, column_5, column_8, column_9.",
       "confidence": "100.0%"
     },
     {
       "table_name": "products",
       "suggestion_type": "3NF",
-      "description": "Transitive dependency detected: column_8, column_4, column_5, column_2, column_3, column_6, column_9 depends on column_7, creating transitive dependency through primary key. Consider extracting to a separate 'column_7_details' table with columns: column_7, column_8, column_4, column_5, column_2, column_3, column_6, column_9.",
+      "description": "Transitive dependency detected: column_6, column_7, column_3, column_4, column_5, column_2, column_9 depends on column_8, creating transitive dependency through primary key. Consider extracting to a separate 'column_8_details' table with columns: column_8, column_6, column_7, column_3, column_4, column_5, column_2, column_9.",
       "confidence": "100.0%"
     },
     {
       "table_name": "products",
       "suggestion_type": "3NF",
-      "description": "Transitive dependency detected: column_8, column_4, column_5, column_2, column_3, column_6, column_7 depends on column_9, creating transitive dependency through primary key. Consider extracting to a separate 'column_9_details' table with columns: column_9, column_8, column_4, column_5, column_2, column_3, column_6, column_7.",
+      "description": "Transitive dependency detected: column_6, column_7, column_3, column_4, column_5, column_2, column_8 depends on column_9, creating transitive dependency through primary key. Consider extracting to a separate 'column_9_details' table with columns: column_9, column_6, column_7, column_3, column_4, column_5, column_2, column_8.",
       "confidence": "100.0%"
     },
     {
       "table_name": "orders",
       "suggestion_type": "3NF",
-      "description": "Transitive dependency detected: column_4, column_5, column_2, column_3, column_6, column_7 depends on column_8, creating transitive dependency through primary key. Consider extracting to a separate 'column_8_details' table with columns: column_8, column_4, column_5, column_2, column_3, column_6, column_7.",
+      "description": "Transitive dependency detected: column_7, column_3, column_4, column_5, column_2, column_8 depends on column_6, creating transitive dependency through primary key. Consider extracting to a separate 'column_6_details' table with columns: column_6, column_7, column_3, column_4, column_5, column_2, column_8.",
       "confidence": "100.0%"
     },
     {
       "table_name": "orders",
       "suggestion_type": "3NF",
-      "description": "Transitive dependency detected: column_8, column_5, column_2, column_3, column_6, column_7 depends on column_4, creating transitive dependency through primary key. Consider extracting to a separate 'column_4_details' table with columns: column_4, column_8, column_5, column_2, column_3, column_6, column_7.",
+      "description": "Transitive dependency detected: column_6, column_3, column_4, column_5, column_2, column_8 depends on column_7, creating transitive dependency through primary key. Consider extracting to a separate 'column_7_details' table with columns: column_7, column_6, column_3, column_4, column_5, column_2, column_8.",
       "confidence": "100.0%"
     },
     {
       "table_name": "orders",
       "suggestion_type": "3NF",
-      "description": "Transitive dependency detected: column_8, column_4, column_2, column_3, column_6, column_7 depends on column_5, creating transitive dependency through primary key. Consider extracting to a separate 'column_5_details' table with columns: column_5, column_8, column_4, column_2, column_3, column_6, column_7.",
+      "description": "Transitive dependency detected: column_6, column_7, column_3, column_5, column_2, column_8 depends on column_4, creating transitive dependency through primary key. Consider extracting to a separate 'column_4_details' table with columns: column_4, column_6, column_7, column_3, column_5, column_2, column_8.",
       "confidence": "100.0%"
     },
     {
       "table_name": "orders",
       "suggestion_type": "3NF",
-      "description": "Transitive dependency detected: column_8, column_4, column_5, column_3, column_6, column_7 depends on column_2, creating transitive dependency through primary key. Consider extracting to a separate 'column_2_details' table with columns: column_2, column_8, column_4, column_5, column_3, column_6, column_7.",
+      "description": "Transitive dependency detected: column_6, column_7, column_3, column_4, column_2, column_8 depends on column_5, creating transitive dependency through primary key. Consider extracting to a separate 'column_5_details' table with columns: column_5, column_6, column_7, column_3, column_4, column_2, column_8.",
       "confidence": "100.0%"
     },
     {
       "table_name": "orders",
       "suggestion_type": "3NF",
-      "description": "Transitive dependency detected: column_8, column_4, column_5, column_2, column_3, column_7 depends on column_6, creating transitive dependency through primary key. Consider extracting to a separate 'column_6_details' table with columns: column_6, column_8, column_4, column_5, column_2, column_3, column_7.",
+      "description": "Transitive dependency detected: column_6, column_7, column_3, column_4, column_5, column_8 depends on column_2, creating transitive dependency through primary key. Consider extracting to a separate 'column_2_details' table with columns: column_2, column_6, column_7, column_3, column_4, column_5, column_8.",
       "confidence": "100.0%"
     },
     {
       "table_name": "orders",
       "suggestion_type": "3NF",
-      "description": "Transitive dependency detected: column_8, column_4, column_5, column_2, column_3, column_6 depends on column_7, creating transitive dependency through primary key. Consider extracting to a separate 'column_7_details' table with columns: column_7, column_8, column_4, column_5, column_2, column_3, column_6.",
+      "description": "Transitive dependency detected: column_6, column_7, column_3, column_4, column_5, column_2 depends on column_8, creating transitive dependency through primary key. Consider extracting to a separate 'column_8_details' table with columns: column_8, column_6, column_7, column_3, column_4, column_5, column_2.",
       "confidence": "100.0%"
     }
   ]

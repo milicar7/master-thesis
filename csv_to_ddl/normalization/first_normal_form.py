@@ -12,17 +12,12 @@ class FirstNormalForm(NormalForm):
         super().__init__()
         self.logger = logging.getLogger(__name__)
 
-    def check(self, table_name: str, table_spec: Optional[TableSpec] = None,
-              tables_data: Optional[Dict[str, List[List[str]]]] = None,
-              tables_headers: Optional[Dict[str, List[str]]] = None) -> List[NormalizationSuggestion]:
+    def check(self, table_name: str, 
+              rows: List[List[str]],
+              headers: List[str],
+              table_spec: Optional[TableSpec] = None) -> List[NormalizationSuggestion]:
         """Check for First Normal Form violations (multivalued attributes)"""
         suggestions = []
-
-        if not tables_data or not tables_headers:
-            return suggestions
-
-        rows = tables_data.get(table_name, [])
-        headers = tables_headers.get(table_name, [])
 
         if not rows or not headers:
             return suggestions

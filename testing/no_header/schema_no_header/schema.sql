@@ -1,5 +1,5 @@
 -- Generated DDL for postgresql
--- Generated at: 2025-08-24T17:08:23.559586
+-- Generated at: 2025-08-25T10:24:46.628851
 
 CREATE TABLE "customers" (
     "column_1" INTEGER NOT NULL,

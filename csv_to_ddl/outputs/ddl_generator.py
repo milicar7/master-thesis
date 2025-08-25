@@ -17,10 +17,10 @@ class DDLGenerator:
         self.type_config = ConfigManager.get_type_config()
         self.logger = logging.getLogger(__name__)
 
-    def generate_schema_ddl(self, table_specs: Dict[str, TableSpec]) -> str:
+    def generate_schema_ddl(self, tables_specs: Dict[str, TableSpec]) -> str:
         ddl_parts = [f"-- Generated DDL for {self.dialect.value}", f"-- Generated at: {datetime.now().isoformat()}", ""]
 
-        for table_name, table_spec in table_specs.items():
+        for table_name, table_spec in tables_specs.items():
             table_ddl = self._generate_table_ddl(table_spec)
             ddl_parts.append(table_ddl)
             ddl_parts.append("")

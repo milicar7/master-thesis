@@ -1,8 +1,8 @@
 import csv
 import os
 
-from config.config_manager import ConfigManager
-from config.default_config import NormalizationConfig
+from csv_to_ddl.config.config_manager import ConfigManager
+from csv_to_ddl.config.default_config import NormalizationConfig
 from csv_to_ddl.models.dialects import DataType
 from csv_to_ddl.models.table import TableSpec, ColumnSpec, PrimaryKeySpec, ColumnSizeSpec
 from csv_to_ddl.normalization.third_normal_form import ThirdNormalForm
@@ -70,7 +70,7 @@ def create_3nf_compliant_table_spec():
 
 
 def test_third_normal_form_violations():
-    csv_path = os.path.join(os.path.dirname(__file__), "test_3nf_data_no_header.csv")
+    csv_path = os.path.join(os.path.dirname(__file__), "test_3nf_data.csv")
     headers, rows = load_csv_data(csv_path)
 
     table_spec = create_student_table_spec()
@@ -82,8 +82,8 @@ def test_third_normal_form_violations():
     suggestions = analyzer.check(
         table_name="student_enrollment",
         table_spec=table_spec,
-        tables_data=tables_data,
-        tables_headers=tables_headers
+        rows=rows,
+        headers=headers
     )
 
     if suggestions:

@@ -11,10 +11,9 @@ def get_table_headers(table_name: str, table_specs: Dict[str, TableSpec]) -> Lis
     return []
 
 
-def get_single_column_values_from_data(table_name: str, column_name: str,
-                                       tables_data: Dict[str, List[List[str]]],
+def get_single_column_values_from_data(column_name: str,
+                                       table_data: List[List[str]],
                                        table_headers: List[str]) -> Set[str]:
-    table_data = tables_data.get(table_name, [])
     if not table_data or not table_headers:
         return set()
 
@@ -69,6 +68,7 @@ def build_reference_keys_map(table_specs: Dict[str, TableSpec],
         }
 
         table_headers = reference_keys[table_name]['headers']
+        table_data = tables_data.get(table_name, [])
         if not table_headers:
             continue
 
@@ -77,7 +77,7 @@ def build_reference_keys_map(table_specs: Dict[str, TableSpec],
             reference_keys[table_name]['primary_key_columns'].update(pk_columns)
 
             if len(pk_columns) == 1:
-                pk_values = get_single_column_values_from_data(table_name, pk_columns[0], tables_data, table_headers)
+                pk_values = get_single_column_values_from_data(pk_columns[0], table_data, table_headers)
                 if pk_values:
                     reference_keys[table_name]['single_keys'][pk_columns[0]] = pk_values
             else:
@@ -90,7 +90,7 @@ def build_reference_keys_map(table_specs: Dict[str, TableSpec],
                     and col.statistics.unique_ratio >= config.pk_single_uniqueness_threshold
                     and col.statistics.distinct_count > 1
                     and col.name not in reference_keys[table_name]['single_keys']):
-                col_values = get_single_column_values_from_data(table_name, col.name, tables_data, table_headers)
+                col_values = get_single_column_values_from_data(col.name, table_data, table_headers)
                 if col_values:
                     reference_keys[table_name]['single_keys'][col.name] = col_values
 

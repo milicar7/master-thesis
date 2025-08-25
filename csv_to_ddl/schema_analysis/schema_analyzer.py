@@ -21,7 +21,7 @@ class SchemaAnalyzer:
 
     def analyze_tables(self, tables_data: Dict[str, List[List[str]]],
                        tables_headers: Dict[str, List[str]]) -> Dict[str, TableSpec]:
-        table_specs = {}
+        tables_specs = {}
 
         for table_name, rows in tables_data.items():
             headers = tables_headers.get(table_name, [])
@@ -31,11 +31,11 @@ class SchemaAnalyzer:
 
             self.logger.info(f"Analyzing table: {table_name}")
             table_spec = self._analyze_single_table(table_name, headers, rows)
-            table_specs[table_name] = table_spec
+            tables_specs[table_name] = table_spec
 
-        self.foreign_key_detector.detect_foreign_keys(table_specs, tables_data)
+        self.foreign_key_detector.detect_foreign_keys(tables_specs, tables_data)
 
-        return table_specs
+        return tables_specs
 
     def _analyze_single_table(self, table_name: str, headers: List[str],
                               rows: List[List[str]]) -> TableSpec:

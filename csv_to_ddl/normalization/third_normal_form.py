@@ -15,9 +15,9 @@ class ThirdNormalForm(NormalForm):
         self.logger = logging.getLogger(__name__)
 
     def check(self, table_name: str,
-              table_spec: Optional[TableSpec] = None,
-              tables_data: Optional[Dict[str, List[List[str]]]] = None,
-              tables_headers: Optional[Dict[str, List[str]]] = None) -> List[NormalizationSuggestion]:
+              table_spec: TableSpec,
+              rows: List[List[str]],
+              headers: List[str]) -> List[NormalizationSuggestion]:
         """
         Check for Third Normal Form violations by detecting transitive dependencies.
         
@@ -26,16 +26,9 @@ class ThirdNormalForm(NormalForm):
         """
         suggestions = []
 
-        if not table_spec or not tables_data or not tables_headers:
+        if not table_spec or not rows or not headers:
             self.logger.warning(f"Insufficient data to analyze 3NF for table {table_name}")
             return suggestions
-
-        if table_name not in tables_data or table_name not in tables_headers:
-            self.logger.warning(f"Table {table_name} data not found")
-            return suggestions
-
-        headers = tables_headers[table_name]
-        rows = tables_data[table_name]
 
         if not table_spec.primary_key:
             self.logger.warning(f"No primary key defined for table {table_name}")

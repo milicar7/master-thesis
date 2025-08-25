@@ -15,18 +15,18 @@ class SecondNormalForm(NormalForm):
         self.logger = logging.getLogger(__name__)
 
     def check(self, table_name: str,
-              table_spec: Optional[TableSpec] = None,
-              tables_data: Optional[Dict[str, List[List[str]]]] = None,
-              tables_headers: Optional[Dict[str, List[str]]] = None) -> List[NormalizationSuggestion]:
+              table_spec: TableSpec,
+              rows: List[List[str]],
+              headers: List[str]) -> List[NormalizationSuggestion]:
         """Check for Second Normal Form violations (partial dependencies)"""
         suggestions = []
 
         if not self._should_check_2nf(table_spec):
             return suggestions
 
-        if tables_data and tables_headers and table_name in tables_data:
+        if rows and headers:
             suggestions.extend(self._check_2nf(
-                table_name, table_spec, tables_data, tables_headers
+                table_name, table_spec, rows, headers
             ))
 
         return suggestions
@@ -38,12 +38,9 @@ class SecondNormalForm(NormalForm):
         return table_spec.primary_key and len(table_spec.primary_key.columns) > 1
 
     def _check_2nf(self, table_name: str, table_spec: TableSpec,
-                   tables_data: Dict[str, List[List[str]]],
-                   tables_headers: Dict[str, List[str]]) -> List[NormalizationSuggestion]:
+                   rows: List[List[str]],
+                   headers: List[str]) -> List[NormalizationSuggestion]:
         suggestions = []
-
-        rows = tables_data[table_name]
-        headers = tables_headers[table_name]
         pk_columns = table_spec.primary_key.columns
         pk_indices = self._get_pk_indices(pk_columns, headers)
 

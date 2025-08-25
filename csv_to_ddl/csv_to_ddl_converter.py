@@ -26,19 +26,19 @@ class CSVToDDLConverter:
 
         tables_data, tables_headers, file_metadata = self.csv_analyzer.process_files(input_path)
 
-        table_specs = self.schema_analyzer.analyze_tables(tables_data, tables_headers)
+        tables_specs = self.schema_analyzer.analyze_tables(tables_data, tables_headers)
 
         ddl_generator = DDLGenerator(dialect)
-        ddl = ddl_generator.generate_schema_ddl(table_specs)
+        ddl = ddl_generator.generate_schema_ddl(tables_specs)
 
-        normalization_suggestions = self.normalization_analyzer.analyze(table_specs, tables_data, tables_headers)
+        normalization_suggestions = self.normalization_analyzer.analyze(tables_specs, tables_data, tables_headers)
 
         results = {
             'ddl': ddl,
-            'tables': table_specs,
+            'tables': tables_specs,
             'normalization_suggestions': normalization_suggestions,
             'file_metadata': file_metadata,
-            'statistics': self._compile_statistics(table_specs, normalization_suggestions)
+            'statistics': self._compile_statistics(tables_specs, normalization_suggestions)
         }
 
         return results
@@ -52,16 +52,16 @@ class CSVToDDLConverter:
             print(results['ddl'])
 
     @staticmethod
-    def _compile_statistics(table_specs: Dict[str, TableSpec],
+    def _compile_statistics(tables_specs: Dict[str, TableSpec],
                             suggestions: List[NormalizationSuggestion]) -> Dict[str, Any]:
-        total_tables = len(table_specs)
-        total_columns = sum(len(spec.columns) for spec in table_specs.values())
-        total_foreign_keys = sum(len(spec.foreign_keys) for spec in table_specs.values())
+        total_tables = len(tables_specs)
+        total_columns = sum(len(spec.columns) for spec in tables_specs.values())
+        total_foreign_keys = sum(len(spec.foreign_keys) for spec in tables_specs.values())
 
-        tables_with_pk = sum(1 for spec in table_specs.values() if spec.primary_key)
+        tables_with_pk = sum(1 for spec in tables_specs.values() if spec.primary_key)
 
         type_distribution = Counter()
-        for spec in table_specs.values():
+        for spec in tables_specs.values():
             for col in spec.columns:
                 type_distribution[col.data_type.value] += 1
 

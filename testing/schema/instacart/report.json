@@ -359,14 +359,14 @@
     {
       "table_name": "products",
       "suggestion_type": "3NF",
-      "description": "Transitive dependency detected: department_id, aisle_id depends on product_name, creating transitive dependency through primary key. Consider extracting to a separate 'product_name_details' table with columns: product_name, department_id, aisle_id.",
-      "confidence": "100.0%"
+      "description": "Transitive dependency detected: department_id depends on aisle_id, creating transitive dependency through primary key. Consider extracting to a separate 'aisle_id_details' table with columns: aisle_id, department_id.",
+      "confidence": "90.1%"
     },
     {
       "table_name": "products",
       "suggestion_type": "3NF",
-      "description": "Transitive dependency detected: department_id depends on aisle_id, creating transitive dependency through primary key. Consider extracting to a separate 'aisle_id_details' table with columns: aisle_id, department_id.",
-      "confidence": "90.1%"
+      "description": "Transitive dependency detected: department_id, aisle_id depends on product_name, creating transitive dependency through primary key. Consider extracting to a separate 'product_name_details' table with columns: product_name, department_id, aisle_id.",
+      "confidence": "100.0%"
     }
   ]
 }

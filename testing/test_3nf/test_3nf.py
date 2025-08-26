@@ -2,10 +2,9 @@ import csv
 import os
 
 from csv_to_ddl.config.config_manager import ConfigManager
-from csv_to_ddl.config.default_config import NormalizationConfig
-from csv_to_ddl.models.dialects import DataType
-from csv_to_ddl.models.table import TableSpec, ColumnSpec, PrimaryKeySpec, ColumnSizeSpec
-from csv_to_ddl.normalization.third_normal_form import ThirdNormalForm
+from csv_to_ddl.schema_analysis.models.dialects import DataType
+from csv_to_ddl.schema_analysis.models.table import TableSpec, ColumnSpec, PrimaryKeySpec, ColumnSizeSpec
+from csv_to_ddl.schema_analysis.normalization.third_normal_form import ThirdNormalForm
 
 
 def load_csv_data(file_path):
@@ -32,9 +31,7 @@ def create_student_table_spec():
 
     primary_key = PrimaryKeySpec(
         columns=["StudentID", "CourseID"],
-        key_type="composite",
-        confidence=1.0,
-        reasoning="StudentID and CourseID together uniquely identify enrollment records"
+        key_type="composite"
     )
 
     return TableSpec(
@@ -57,9 +54,7 @@ def create_3nf_compliant_table_spec():
 
     primary_key = PrimaryKeySpec(
         columns=["StudentID", "CourseID"],
-        key_type="composite",
-        confidence=1.0,
-        reasoning="StudentID and CourseID together uniquely identify enrollment records"
+        key_type="composite"
     )
 
     return TableSpec(
@@ -74,17 +69,11 @@ def test_third_normal_form_violations():
     headers, rows = load_csv_data(csv_path)
 
     table_spec = create_student_table_spec()
-    tables_data = {"student_enrollment": rows}
-    tables_headers = {"student_enrollment": headers}
 
     config = ConfigManager().get_normalization_config()
     analyzer = ThirdNormalForm(config)
-    suggestions = analyzer.check(
-        table_name="student_enrollment",
-        table_spec=table_spec,
-        rows=rows,
-        headers=headers
-    )
+
+    suggestions = analyzer.check("student_enrollment", headers, rows, table_spec)
 
     if suggestions:
         for i, suggestion in enumerate(suggestions, 1):
@@ -102,4 +91,4 @@ def test_third_normal_form_violations():
 
 
 if __name__ == "__main__":
-     test_third_normal_form_violations()
+    test_third_normal_form_violations()

@@ -1,5 +1,5 @@
 -- Generated DDL for postgresql
--- Generated at: 2025-08-25T13:12:49.523551
+-- Generated at: 2025-08-26T20:28:20.882534
 
 CREATE TABLE "order_products" (
     "order_id" INTEGER NOT NULL,
@@ -12,7 +12,7 @@ CREATE TABLE "order_products" (
 
 CREATE TABLE "products" (
     "product_id" INTEGER NOT NULL,
-    "product_name" VARCHAR(196) NOT NULL,
+    "product_name" VARCHAR(255) NOT NULL,
     "aisle_id" INTEGER NOT NULL,
     "department_id" INTEGER NOT NULL,
     PRIMARY KEY ("product_id"),
@@ -20,25 +20,32 @@ CREATE TABLE "products" (
     FOREIGN KEY ("department_id") REFERENCES "departments" ("department_id")
 );
 
+-- NORMALIZATION SUGGESTIONS:
+-- [3NF] products: Transitive dependency detected: department_id depends on aisle_id, creating transitive dependency through primary key. Consider extracting to a separate 'aisle_id_details' columns_and_types with columns: aisle_id, department_id.
+--   Confidence: 0.9
+
+-- [3NF] products: Transitive dependency detected: department_id, aisle_id depends on product_name, creating transitive dependency through primary key. Consider extracting to a separate 'product_name_details' columns_and_types with columns: product_name, department_id, aisle_id.
+--   Confidence: 1.0
+
 CREATE TABLE "orders" (
     "order_id" INTEGER NOT NULL,
     "user_id" INTEGER NOT NULL,
-    "eval_set" VARCHAR(10) NOT NULL,
+    "eval_set" VARCHAR(255) NOT NULL,
     "order_number" INTEGER NOT NULL,
     "order_dow" INTEGER NOT NULL,
     "order_hour_of_day" INTEGER NOT NULL,
-    "days_since_prior_order" DECIMAL(10,1),
+    "days_since_prior_order" DECIMAL(18,6),
     PRIMARY KEY ("order_id")
 );
 
 CREATE TABLE "departments" (
     "department_id" INTEGER NOT NULL,
-    "department" VARCHAR(30) NOT NULL,
+    "department" VARCHAR(255) NOT NULL,
     PRIMARY KEY ("department_id")
 );
 
 CREATE TABLE "aisles" (
     "aisle_id" INTEGER NOT NULL,
-    "aisle" VARCHAR(58) NOT NULL,
+    "aisle" VARCHAR(255) NOT NULL,
     PRIMARY KEY ("aisle_id")
 );

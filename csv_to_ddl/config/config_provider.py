@@ -1,12 +1,15 @@
 from typing import Protocol
 
-from csv_to_ddl.config.default_config import CSVConfig, KeyConfig, TypeConfig, NormalizationConfig
+from csv_to_ddl.config.default_config import CSVConfig, KeyConfig, TypeConfig, NormalizationConfig, HeaderConfig
 
 
 class ConfigProvider(Protocol):
     """Protocol for configuration providers"""
 
     def get_csv_config(self) -> CSVConfig:
+        ...
+
+    def get_header_config(self) -> HeaderConfig:
         ...
 
     def get_key_config(self) -> KeyConfig:
@@ -25,6 +28,10 @@ class DefaultConfigProvider:
     @staticmethod
     def get_csv_config() -> CSVConfig:
         return CSVConfig()
+
+    @staticmethod
+    def get_header_config() -> HeaderConfig:
+        return HeaderConfig()
 
     @staticmethod
     def get_key_config() -> KeyConfig:

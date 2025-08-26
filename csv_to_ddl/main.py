@@ -1,14 +1,13 @@
 import logging
 
-from csv_to_ddl.cli.argument_parser import ArgumentParser
+from argument_parser import ArgumentParser
 from csv_to_ddl.config.config_manager import ConfigManager
 from csv_to_ddl.config.config_provider import DefaultConfigProvider
 from csv_to_ddl.csv_to_ddl_converter import CSVToDDLConverter
-from csv_to_ddl.models.dialects import DatabaseDialect
-from csv_to_ddl.outputs.json_reporter import JsonReporter
-from csv_to_ddl.outputs.summary_reporter import SummaryReporter
+from schema_analysis.models.dialects import DatabaseDialect
 
 
+# noinspection SpellCheckingInspection
 def setup_logging(verbose: bool = False):
     level = logging.DEBUG if verbose else logging.INFO
     logging.basicConfig(
@@ -33,18 +32,10 @@ def csv_to_ddl():
             return 1
 
         ConfigManager.initialize(DefaultConfigProvider())
-        dialect = DatabaseDialect(args.dialect)
-        converter = CSVToDDLConverter()
+        converter = CSVToDDLConverter(DatabaseDialect(args.dialect))
 
-        results = converter.convert(input_path=args.input, dialect=dialect)
-
-        converter.output_ddl(args.output, results['ddl'])
-        if args.report:
-            json_reporter = JsonReporter()
-            json_reporter.generate_report(results, args.report)
-
-        summary_reporter = SummaryReporter()
-        summary_reporter.print_summary(results['statistics'])
+        results = converter.convert(input_path=args.input)
+        converter.write_output(args.output, results)
 
         return 0
 

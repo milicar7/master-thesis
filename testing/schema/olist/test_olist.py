@@ -12,6 +12,8 @@ def test_olist():
     result = subprocess.run([sys.executable, main_py,
                     '-i', csv_file,
                     '-o', 'testing/schema/olist/schema.sql',
-                    '-r', 'testing/schema/olist/report.json',
                     '-v'],
                    capture_output=True, text=True, env=env, timeout=60)
+
+    print(result.stdout)
+    print(result.stderr)

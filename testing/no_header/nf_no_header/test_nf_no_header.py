@@ -12,7 +12,6 @@ def test_2nf_no_header():
     result = subprocess.run([sys.executable, main_py,
                              '-i', csv_file,
                              '-o', 'testing/no_header/nf_no_header/schema.sql',
-                             '-r', 'testing/no_header/nf_no_header/report.json',
                              '-v'], capture_output=True, text=True, env=env, timeout=60)
     print("Expected violations:")
     print("- column_3 should depend only on column_1 (not column_2)")

@@ -1,129 +1,118 @@
+import logging
 import re
-from typing import List, Tuple
+from typing import List
 
-from csv_to_ddl.config.default_config import CSVConfig, TypeConfig
-from csv_to_ddl.models.dialects import DataType
-from csv_to_ddl.schema_analysis.type_detection.type_name import (detect_column_type, is_date, is_datetime, is_integer,
-                                                                 is_decimal,
-                                                                 is_float)
-
-
-def calculate_header_indicators_score(cell_str: str, config: CSVConfig) -> float:
-    col_score = 0.0
-
-    if re.match(r'^[a-zA-Z][a-zA-Z0-9_\s]*$', cell_str):
-        col_score += config.header_letter_pattern_bonus
-
-    if '_' in cell_str or ' ' in cell_str:
-        col_score += config.header_underscore_space_bonus
-
-    if cell_str.isupper() or cell_str.islower():
-        col_score += config.header_case_consistency_bonus
-
-    if len(cell_str) <= config.header_max_length_threshold:
-        col_score += config.header_length_bonus
-
-    return col_score
+from config.config_manager import ConfigManager
+from schema_analysis.columns_and_types.type_detection.type_detectors import is_integer, is_decimal, is_float, is_date, \
+    is_datetime
+from schema_analysis.columns_and_types.type_detection.type_name import detect_column_type
+from schema_analysis.models.dialects import DataType
 
 
-def calculate_anti_header_penalties(cell_str: str, config: CSVConfig) -> float:
-    penalty = 0.0
+class HeaderDetection:
+    def __init__(self):
+        self.header_config = ConfigManager.get_header_config()
+        self.type_config = ConfigManager.get_type_config()
+        self.logger = logging.getLogger(__name__)
 
-    int_confidence, _ = is_integer([cell_str])
-    dec_confidence, _ = is_decimal([cell_str])
-    float_confidence, _ = is_float([cell_str])
-    
-    if (int_confidence > config.header_type_penalty_threshold or 
-        dec_confidence > config.header_type_penalty_threshold or 
-        float_confidence > config.header_type_penalty_threshold):
-        penalty += config.header_numeric_penalty
+    def has_headers(self, rows) -> bool:
+        if not rows:
+            return False
 
-    date_confidence, _ = is_date([cell_str])
-    datetime_confidence, _ = is_datetime([cell_str])
-    
-    if (date_confidence > config.header_type_penalty_threshold or 
-        datetime_confidence > config.header_type_penalty_threshold):
-        penalty += config.header_date_penalty
+        if len(rows) == 1:
+            return True
 
-    return penalty
+        first_row = rows[0]
+        data_rows = rows[1:min(len(rows), self.header_config.header_data_rows_sample_size)]
+        detection_sample_size = min(len(data_rows), self.header_config.header_detection_sample_size)
+        header_score = 0.0
+        total_cols = len(first_row)
 
+        for i, cell in enumerate(first_row):
+            col_score = 0.0
+            cell = str(cell).strip()
+            data_values = []
 
-def calculate_type_comparison_score(cell_str: str, data_values: List[str], config: CSVConfig, type_config: TypeConfig) -> float:
-    if not data_values:
-        return 0.0
+            if data_rows and i < len(data_rows[0]):
+                data_values = [row[i] if i < len(row) else '' for row in data_rows[:detection_sample_size]]
 
-    col_score = 0.0
+            col_score += self._calculate_header_indicators_score(cell)
+            col_score -= self._calculate_anti_header_penalties(cell)
+            col_score += self._calculate_type_comparison_score(cell, data_values)
 
-    header_type, header_metadata = detect_column_type([cell_str], type_config)
-    data_type, data_metadata = detect_column_type(data_values, type_config)
+            header_score += max(0.0, min(1.0, col_score))
 
-    if header_type != data_type:
-        col_score += config.header_type_difference_bonus
+        confidence = header_score / total_cols if total_cols > 0 else 0.0
+        confidence *= self._calculate_uniqueness_penalty(first_row)
+        confidence += self._calculate_common_pattern_boost(first_row)
 
-        if (header_type in [DataType.TEXT, DataType.VARCHAR] and
-                data_type in [DataType.INTEGER, DataType.FLOAT, DataType.DATE,
-                              DataType.DATETIME, DataType.EMAIL, DataType.URL, DataType.UUID]):
-            col_score += config.header_text_vs_structured_bonus
+        return confidence >= self.header_config.header_confidence_threshold
 
-    header_confidence = header_metadata.get('match_ratio', 0.5)
-    data_confidence = data_metadata.get('match_ratio', 0.5)
+    def _calculate_header_indicators_score(self, cell: str) -> float:
+        col_score = 0.0
 
-    if data_confidence > 0.9 and header_confidence < 0.5:
-        col_score += config.header_confidence_contrast_bonus
+        if re.match(r'^[a-zA-Z][a-zA-Z0-9_\s]*$', cell):
+            col_score += self.header_config.header_letter_pattern_bonus
 
-    return col_score
+        if '_' in cell or ' ' in cell:
+            col_score += self.header_config.header_underscore_space_bonus
 
+        if cell.isupper() or cell.islower():
+            col_score += self.header_config.header_case_consistency_bonus
 
-def calculate_uniqueness_penalty(first_row: List[str]) -> float:
-    unique_names = len(set(str(cell).strip().lower() for cell in first_row))
-    return unique_names / max(1, len(first_row))
+        if len(cell) <= self.header_config.header_max_length_threshold:
+            col_score += self.header_config.header_length_bonus
 
+        return col_score
 
-def calculate_common_pattern_boost(first_row: List[str]) -> float:
-    common_suffixes = ['_id', '_key', '_date', '_time', '_at', '_count', '_total', '_name', '_code']
-    suffix_matches = sum(
-        1 for cell in first_row if any(str(cell).lower().endswith(suffix) for suffix in common_suffixes))
-    return (suffix_matches / len(first_row)) * 0.1
+    def _calculate_anti_header_penalties(self, cell: str) -> float:
+        penalty = 0.0
 
+        int_confidence = is_integer([cell])
+        dec_confidence = is_decimal([cell])
+        float_confidence = is_float([cell])
 
-def calculate_column_score(cell: str, data_values: List[str], config: CSVConfig, type_config: TypeConfig) -> float:
-    cell_str = str(cell).strip()
-    col_score = 0.0
+        if (int_confidence > self.header_config.header_type_penalty_threshold or
+                dec_confidence > self.header_config.header_type_penalty_threshold or
+                float_confidence > self.header_config.header_type_penalty_threshold):
+            penalty += self.header_config.header_numeric_penalty
 
-    col_score += calculate_header_indicators_score(cell_str, config)
-    col_score -= calculate_anti_header_penalties(cell_str, config)
-    col_score += calculate_type_comparison_score(cell_str, data_values, config, type_config)
+        date_confidence = is_date([cell])
+        datetime_confidence = is_datetime([cell])
 
-    return max(0.0, min(1.0, col_score))
+        if (date_confidence > self.header_config.header_type_penalty_threshold or
+                datetime_confidence > self.header_config.header_type_penalty_threshold):
+            penalty += self.header_config.header_date_penalty
 
+        return penalty
 
-def detect_headers(rows: List[List[str]], config: CSVConfig, type_config: TypeConfig) -> Tuple[bool, float]:
-    if not rows:
-        return False, 0.0
+    def _calculate_type_comparison_score(self, cell: str, data_values: List[str]) -> float:
+        if not data_values:
+            return 0.0
 
-    if len(rows) == 1:
-        return True, 0.5
+        col_score = 0.0
 
-    first_row = rows[0]
-    if not first_row:
-        return False, 0.0
+        header_type = detect_column_type([cell], self.type_config)
+        data_type = detect_column_type(data_values, self.type_config)
 
-    data_rows = rows[1:min(len(rows), config.header_data_rows_sample_size)]
-    header_score = 0.0
-    total_cols = len(first_row)
+        if header_type != data_type:
+            col_score += self.header_config.header_type_difference_bonus
 
-    for i, cell in enumerate(first_row):
-        data_values = []
-        if data_rows and i < len(data_rows[0]):
-            data_values = [row[i] if i < len(row) else '' for row in
-                           data_rows[:min(len(data_rows), config.header_detection_sample_size)]]
+            if (header_type in [DataType.TEXT, DataType.VARCHAR] and
+                    data_type in [DataType.INTEGER, DataType.FLOAT, DataType.DATE,
+                                  DataType.DATETIME, DataType.EMAIL, DataType.URL, DataType.UUID]):
+                col_score += self.header_config.header_text_vs_structured_bonus
 
-        col_score = calculate_column_score(cell, data_values, config, type_config)
-        header_score += col_score
+        return col_score
 
-    confidence = header_score / total_cols if total_cols > 0 else 0.0
-    confidence *= calculate_uniqueness_penalty(first_row)
-    confidence += calculate_common_pattern_boost(first_row)
+    @staticmethod
+    def _calculate_uniqueness_penalty(first_row: List[str]) -> float:
+        unique_names = len(set(str(cell).strip().lower() for cell in first_row))
+        return unique_names / max(1, len(first_row))
 
-    has_headers = confidence >= config.header_confidence_threshold
-    return has_headers, confidence
+    @staticmethod
+    def _calculate_common_pattern_boost(first_row: List[str]) -> float:
+        common_suffixes = ['_id', '_key', '_date', '_time', '_at', '_count', '_total', '_name', '_code']
+        suffix_matches = sum(1 for cell in first_row if any(str(cell).lower().endswith(suffix)
+                                                            for suffix in common_suffixes))
+        return (suffix_matches / len(first_row)) * 0.1

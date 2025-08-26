@@ -12,7 +12,6 @@ def test_no_header_dataset():
     result = subprocess.run([sys.executable, main_py,
                              '-i', csv_file,
                              '-o', 'testing/no_header/schema_no_header/schema.sql',
-                             '-r', 'testing/no_header/schema_no_header/report.json',
                              '-v'], capture_output=True, text=True, env=env, timeout=60)
     print(result.stdout)
     print(result.stderr)

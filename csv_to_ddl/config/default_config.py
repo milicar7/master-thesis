@@ -9,17 +9,11 @@ from csv_to_ddl.config.constants.type_detection import *
 
 @dataclass
 class CSVConfig:
-    """Configuration for CSV processing and header detection"""
-
-    # =============================================================================
-    # CSV File Reading
-    # =============================================================================
     sample_size: int = SAMPLE_SIZE
     delimiter_detection_sample_size: int = DELIMITER_DETECTION_SAMPLE_SIZE
 
-    # =============================================================================
-    # Header Detection
-    # =============================================================================
+@dataclass
+class HeaderConfig:
     header_detection_sample_size: int = HEADER_DETECTION_SAMPLE_SIZE
     header_data_rows_sample_size: int = HEADER_DATA_ROWS_SAMPLE_SIZE
     header_confidence_threshold: float = HEADER_CONFIDENCE_THRESHOLD
@@ -33,7 +27,6 @@ class CSVConfig:
     header_length_bonus: float = HEADER_LENGTH_BONUS
     header_type_difference_bonus: float = HEADER_TYPE_DIFFERENCE_BONUS
     header_text_vs_structured_bonus: float = HEADER_TEXT_VS_STRUCTURED_BONUS
-    header_confidence_contrast_bonus: float = HEADER_CONFIDENCE_CONTRAST_BONUS
 
     # Header penalties
     header_numeric_penalty: float = HEADER_NUMERIC_PENALTY
@@ -42,13 +35,9 @@ class CSVConfig:
 
 @dataclass
 class KeyConfig:
-    """Configuration for primary key and foreign key detection"""
-
     # =============================================================================
     # Surrogate key
     # =============================================================================
-    enable_composite_key_detection: bool = True
-    enable_surrogate_key_generation: bool = True
     surrogate_key_name: str = "id"
 
     # =============================================================================
@@ -92,8 +81,6 @@ class KeyConfig:
 
 @dataclass
 class NormalizationConfig:
-    """Configuration for normalization analysis (2NF and 3NF)"""
-
     # =============================================================================
     # Second Normal Form (2NF) Detection
     # =============================================================================
@@ -121,21 +108,12 @@ class NormalizationConfig:
 
 @dataclass
 class TypeConfig:
-    """Configuration for type detection and database type sizing"""
     type_detection_sample_size: int = TYPE_DETECTION_SAMPLE_SIZE
     type_detection_confidence_threshold: float = TYPE_DETECTION_CONFIDENCE_THRESHOLD
 
-    # Basic type sizes
     max_varchar_length: int = MAX_VARCHAR_LENGTH
-    boolean_size: int = BOOLEAN_SIZE
     uuid_char_length: int = UUID_CHAR_LENGTH
+    boolean_length: int = BOOLEAN_LENGTH
 
-    # Decimal precision configuration
+    decimal_precision_limit: int = DECIMAL_PRECISION_LIMIT
     decimal_scale_limit: int = DECIMAL_SCALE_LIMIT
-    decimal_precision_min: int = DECIMAL_PRECISION_MIN
-    decimal_precision_max: int = DECIMAL_PRECISION_MAX
-    decimal_integer_buffer: int = DECIMAL_INTEGER_BUFFER
-
-    # Buffer multipliers for string types
-    char_buffer_multiplier: int = CHAR_BUFFER_MULTIPLIER
-    varchar_buffer_multiplier: int = VARCHAR_BUFFER_MULTIPLIER

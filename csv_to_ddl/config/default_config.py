@@ -36,22 +36,13 @@ class HeaderConfig:
 @dataclass
 class KeyConfig:
     # =============================================================================
-    # Surrogate key
-    # =============================================================================
-    surrogate_key_name: str = "id"
-
-    # =============================================================================
     # Primary Key Detection
     # =============================================================================
-    pk_single_confidence_threshold: float = PK_CONFIDENCE_THRESHOLD
-    pk_single_uniqueness_threshold: float = PK_SINGLE_UNIQUENESS_THRESHOLD
-    pk_composite_uniqueness_threshold: float = PK_COMPOSITE_UNIQUENESS_THRESHOLD
+    pk_uniqueness_threshold: float = PK_UNIQUENESS_THRESHOLD
 
-    pk_uniqueness_bonus: float = PK_UNIQUENESS_BONUS
-    pk_not_nullable_bonus: float = PK_NOT_NULLABLE_BONUS
     pk_primary_name_bonus: float = PK_PRIMARY_NAME_BONUS
     pk_id_name_bonus: float = PK_ID_NAME_BONUS
-    pk_uuid_type_bonus: float = PK_UUID_TYPE_BONUS
+    pk_type_bonus: float = PK_TYPE_BONUS
     pk_text_length_threshold: int = PK_TEXT_LENGTH_THRESHOLD
     pk_long_text_penalty: float = PK_LONG_TEXT_PENALTY
 

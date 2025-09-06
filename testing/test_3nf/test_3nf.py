@@ -18,15 +18,15 @@ def load_csv_data(file_path):
 def create_student_table_spec():
     columns = [
         ColumnSpec(name="StudentID", data_type=DataType.VARCHAR, nullable=False,
-                   size_spec=ColumnSizeSpec(max_length=10)),
+                   size_spec=ColumnSizeSpec(length=10)),
         ColumnSpec(name="Name", data_type=DataType.VARCHAR, nullable=False,
-                   size_spec=ColumnSizeSpec(max_length=100)),
+                   size_spec=ColumnSizeSpec(length=100)),
         ColumnSpec(name="CourseID", data_type=DataType.VARCHAR, nullable=False,
-                   size_spec=ColumnSizeSpec(max_length=10)),
+                   size_spec=ColumnSizeSpec(length=10)),
         ColumnSpec(name="CourseName", data_type=DataType.VARCHAR, nullable=False,
-                   size_spec=ColumnSizeSpec(max_length=100)),
+                   size_spec=ColumnSizeSpec(length=100)),
         ColumnSpec(name="Instructor", data_type=DataType.VARCHAR, nullable=False,
-                   size_spec=ColumnSizeSpec(max_length=100))
+                   size_spec=ColumnSizeSpec(length=100))
     ]
 
     primary_key = PrimaryKeySpec(
@@ -44,11 +44,11 @@ def create_student_table_spec():
 def create_3nf_compliant_table_spec():
     columns = [
         ColumnSpec(name="StudentID", data_type=DataType.VARCHAR, nullable=False,
-                   size_spec=ColumnSizeSpec(max_length=10)),
+                   size_spec=ColumnSizeSpec(length=10)),
         ColumnSpec(name="CourseID", data_type=DataType.VARCHAR, nullable=False,
-                   size_spec=ColumnSizeSpec(max_length=10)),
+                   size_spec=ColumnSizeSpec(length=10)),
         ColumnSpec(name="Grade", data_type=DataType.VARCHAR, nullable=False,
-                   size_spec=ColumnSizeSpec(max_length=2)),
+                   size_spec=ColumnSizeSpec(length=2)),
         ColumnSpec(name="EnrollmentDate", data_type=DataType.DATE, nullable=False)
     ]
 

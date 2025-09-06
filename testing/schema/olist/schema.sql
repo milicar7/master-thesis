@@ -1,5 +1,5 @@
 -- Generated DDL for postgresql
--- Generated at: 2025-08-26T20:40:40.916699
+-- Generated at: 2025-09-06T18:11:40.535955
 
 CREATE TABLE "olist_sellers_dataset" (
     "seller_id" VARCHAR(255) NOT NULL,
@@ -29,7 +29,7 @@ CREATE TABLE "olist_orders_dataset" (
 );
 
 -- NORMALIZATION SUGGESTIONS:
--- [3NF] olist_orders_dataset: Transitive dependency detected: order_delivered_carrier_date, order_delivered_customer_date, order_approved_at, order_status, order_estimated_delivery_date, order_purchase_timestamp depends on customer_id, creating transitive dependency through primary key. Consider extracting to a separate 'customer_id_details' columns_and_types with columns: customer_id, order_delivered_carrier_date, order_delivered_customer_date, order_approved_at, order_status, order_estimated_delivery_date, order_purchase_timestamp.
+-- [3NF] olist_orders_dataset: Transitive dependency detected: order_approved_at, order_delivered_carrier_date, order_delivered_customer_date, order_estimated_delivery_date, order_status, order_purchase_timestamp depends on customer_id, creating transitive dependency through primary key. Consider extracting to a separate 'customer_id_details' columns_and_types with columns: customer_id, order_approved_at, order_delivered_carrier_date, order_delivered_customer_date, order_estimated_delivery_date, order_status, order_purchase_timestamp.
 --   Confidence: 1.0
 
 CREATE TABLE "olist_order_items_dataset" (
@@ -81,8 +81,8 @@ CREATE TABLE "olist_geolocation_dataset" (
     "geolocation_lng" DECIMAL(18,6) NOT NULL,
     "geolocation_city" VARCHAR(255) NOT NULL,
     "geolocation_state" VARCHAR(255) NOT NULL,
-    "id" INTEGER SERIAL NOT NULL,
-    PRIMARY KEY ("id")
+    "olist_geolocation_dataset_id" INTEGER SERIAL NOT NULL,
+    PRIMARY KEY ("olist_geolocation_dataset_id")
 );
 
 CREATE TABLE "olist_order_payments_dataset" (
@@ -91,9 +91,19 @@ CREATE TABLE "olist_order_payments_dataset" (
     "payment_type" VARCHAR(255) NOT NULL,
     "payment_installments" INTEGER NOT NULL,
     "payment_value" DECIMAL(18,6) NOT NULL,
-    PRIMARY KEY ("order_id"),
+    PRIMARY KEY ("order_id", "payment_sequential"),
     FOREIGN KEY ("order_id") REFERENCES "olist_orders_dataset" ("order_id")
 );
+
+-- NORMALIZATION SUGGESTIONS:
+-- [2NF] olist_order_payments_dataset: Column 'payment_type' has partial dependency on 'order_id' (part of composite key ['order_id', 'payment_sequential']) instead of depending on the full key (strength: 97.8%). Consider extracting to a separate 'order_payment_type' table with columns: order_id, payment_type.
+--   Confidence: 1.0
+
+-- [2NF] olist_order_payments_dataset: Column 'payment_installments' has partial dependency on 'order_id' (part of composite key ['order_id', 'payment_sequential']) instead of depending on the full key (strength: 99.2%). Consider extracting to a separate 'order_payment_installments' table with columns: order_id, payment_installments.
+--   Confidence: 1.0
+
+-- [2NF] olist_order_payments_dataset: Column 'payment_value' has partial dependency on 'order_id' (part of composite key ['order_id', 'payment_sequential']) instead of depending on the full key (strength: 97.1%). Consider extracting to a separate 'order_payment_value' table with columns: order_id, payment_value.
+--   Confidence: 1.0
 
 CREATE TABLE "olist_order_reviews_dataset" (
     "review_id" VARCHAR(255) NOT NULL,
@@ -103,7 +113,7 @@ CREATE TABLE "olist_order_reviews_dataset" (
     "review_comment_message" VARCHAR(255),
     "review_creation_date" TIMESTAMP NOT NULL,
     "review_answer_timestamp" TIMESTAMP NOT NULL,
-    PRIMARY KEY ("review_id"),
+    PRIMARY KEY ("review_id", "order_id"),
     FOREIGN KEY ("order_id") REFERENCES "olist_orders_dataset" ("order_id")
 );
 

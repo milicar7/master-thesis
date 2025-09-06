@@ -17,15 +17,15 @@ def load_csv_data(file_path):
 def create_table_spec():
     columns = [
         ColumnSpec(name="StudentID", data_type=DataType.VARCHAR, nullable=False, 
-                   size_spec=ColumnSizeSpec(max_length=10)),
+                   size_spec=ColumnSizeSpec(length=10)),
         ColumnSpec(name="CourseID", data_type=DataType.VARCHAR, nullable=False,
-                   size_spec=ColumnSizeSpec(max_length=10)), 
+                   size_spec=ColumnSizeSpec(length=10)), 
         ColumnSpec(name="StudentName", data_type=DataType.VARCHAR, nullable=False,
-                   size_spec=ColumnSizeSpec(max_length=50)),
+                   size_spec=ColumnSizeSpec(length=50)),
         ColumnSpec(name="CourseName", data_type=DataType.VARCHAR, nullable=False,
-                   size_spec=ColumnSizeSpec(max_length=100)),
+                   size_spec=ColumnSizeSpec(length=100)),
         ColumnSpec(name="Grade", data_type=DataType.VARCHAR, nullable=False,
-                   size_spec=ColumnSizeSpec(max_length=2)),
+                   size_spec=ColumnSizeSpec(length=2)),
         ColumnSpec(name="Credits", data_type=DataType.INTEGER, nullable=False)
     ]
 

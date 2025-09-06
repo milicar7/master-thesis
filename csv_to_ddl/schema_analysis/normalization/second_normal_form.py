@@ -16,7 +16,26 @@ class SecondNormalForm(NormalForm):
 
     def check(self, table_name: str, header: List[str],
               rows: List[List[str]], table_spec: TableSpec) -> List[NormalizationSuggestion]:
-        """Check for Second Normal Form violations (partial dependencies)"""
+        """
+        Second Normal Form violation detection algorithm.
+        
+        Detects partial dependencies where non-key attributes depend on only part
+        of a composite primary key instead of the full key. Only applies to tables
+        with composite primary keys.
+        
+        Process:
+        1. Verify table has composite primary key (required for 2NF violations)
+        2. For each non-key column:
+           - Test dependency strength against individual PK components
+           - Compare partial dependency strength vs full key dependency
+        3. Generate suggestions to extract partially dependent columns
+        
+        Partial dependency: (A,B) → C but A → C (C depends on part of composite key)
+        Solution: Extract C into separate table with A as foreign key
+        
+        Returns:
+            List of normalization suggestions for table decomposition
+        """
         suggestions = []
 
         if not self._should_check_2nf(table_spec):

@@ -12,8 +12,36 @@ logger = logging.getLogger(__name__)
 def detect_single_column_foreign_keys(table_name: str,
                                       table_header: List[str], table_data: List[List[str]], table_spec: TableSpec,
                                       reference_keys: Dict[str, Dict], config: KeyConfig) -> List[ForeignKeySpec]:
+    """
+    Algorithm for detecting single-column foreign key relationships.
+    
+    Process:
+    1. For each column in the current table:
+       - Extract unique values from actual data
+       - Compare against all potential reference columns in other tables
+    2. For each potential reference relationship:
+       - Calculate value overlap ratio (how many values exist in reference table)
+       - Apply naming pattern bonuses (matching column names, common FK patterns)
+       - Apply primary key bonus if referencing a primary key column
+    3. Select best match above confidence threshold for each column
+    
+    Uses set intersection to efficiently compute overlaps and applies
+    heuristic scoring to rank potential relationships.
+    
+    Args:
+        table_name: Name of table being analyzed
+        table_header: Column headers for data access
+        table_data: Actual data rows
+        table_spec: Table specification with column metadata
+        reference_keys: Map of all potential reference tables and their key columns
+        config: Configuration with FK detection parameters
+        
+    Returns:
+        List of detected foreign key specifications
+    """
     foreign_keys = []
 
+    # Analyze each column as potential foreign key
     for col in table_spec.columns:
         col_values = get_single_column_values_from_data(col.name, table_data, table_header)
         if not col_values:
@@ -22,11 +50,13 @@ def detect_single_column_foreign_keys(table_name: str,
         best_match = None
         best_score = 0.0
 
+        # Test against all potential reference tables/columns
         for ref_table, ref_data in reference_keys.items():
-            if ref_table == table_name:
+            if ref_table == table_name:  # Skip self-references
                 continue
 
             for ref_col, ref_values in ref_data['single_keys'].items():
+                # Calculate relationship strength score
                 match_score, overlap_ratio = _calculate_match_score(col_values, ref_values,
                                                                     col.name, ref_col,
                                                                     ref_table, reference_keys, config)

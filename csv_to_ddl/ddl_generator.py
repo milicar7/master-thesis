@@ -14,6 +14,30 @@ class DDLGenerator:
         self.logger = logging.getLogger(__name__)
 
     def generate_schema_ddl(self, tables_specs: Dict[str, TableSpec]) -> str:
+        """
+        DDL generation algorithm with multi-dialect support.
+        
+        Process:
+        1. Generate header with metadata (dialect, timestamp)
+        2. For each table specification:
+           - Generate CREATE TABLE statement with columns
+           - Add primary key constraints
+           - Add foreign key constraints with proper referencing
+           - Include normalization suggestions as comments
+        3. Format according to target database dialect syntax
+        
+        Handles dialect-specific differences in:
+        - Data type mappings (e.g., PostgreSQL vs MySQL types)
+        - Identifier quoting rules
+        - Constraint syntax variations
+        - Size specification formats
+        
+        Output is production-ready DDL that can be executed directly
+        on the target database system.
+        
+        Returns:
+            Complete DDL script as formatted string
+        """
         ddl_parts = [f"-- Generated DDL for {self.dialect.value}", f"-- Generated at: {datetime.now().isoformat()}", ""]
 
         for table_name, table_spec in tables_specs.items():
@@ -21,6 +45,7 @@ class DDLGenerator:
             ddl_parts.append(table_ddl)
             ddl_parts.append("")
 
+            # Include normalization analysis as actionable comments
             if table_spec.normalization_suggestions:
                 ddl_parts.append("-- NORMALIZATION SUGGESTIONS:")
                 for suggestion in table_spec.normalization_suggestions:

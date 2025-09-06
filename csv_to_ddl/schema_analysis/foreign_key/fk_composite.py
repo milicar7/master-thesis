@@ -11,6 +11,27 @@ logger = logging.getLogger(__name__)
 def detect_composite_foreign_keys(table_name: str,
                                   table_header: List[str], table_data: List[List[str]], table_spec: TableSpec,
                                   reference_keys: Dict[str, Dict], config: KeyConfig) -> List[ForeignKeySpec]:
+    """
+    Algorithm for detecting multi-column composite foreign key relationships.
+    
+    Process:
+    1. Extract composite primary key patterns from all reference tables
+    2. For each composite PK pattern:
+       - Find matching column names in current table
+       - Test value overlap using tuple-based comparison
+       - Calculate confidence based on overlap ratio and naming similarity
+    3. Select best matches above confidence threshold
+    
+    Handles relationships like:
+    - order_items(product_id, supplier_id) → products(product_id, supplier_id)
+    - Uses tuple-based set intersection for multi-column value matching
+    
+    More complex than single FK detection due to combinatorial column matching
+    and multi-dimensional value space analysis.
+    
+    Returns:
+        List of composite foreign key specifications with confidence scores
+    """
     foreign_keys = []
 
     composite_pk_patterns = _get_composite_pk_patterns(reference_keys, table_name)

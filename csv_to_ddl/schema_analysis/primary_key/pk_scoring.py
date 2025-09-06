@@ -6,32 +6,18 @@ from csv_to_ddl.schema_analysis.models.table import ColumnSpec
 def calculate_column_pk_score(col: ColumnSpec, config: KeyConfig) -> float:
     score = 0.0
 
-    if not col.nullable:
-        score += config.pk_not_nullable_bonus
-
-    name_score = _calculate_name_score(col.name, config)
-    score += name_score
-
-    if col.data_type in [DataType.INTEGER, DataType.BIGINT, DataType.UUID]:
-        score += config.pk_uuid_type_bonus
-
-    if col.data_type == DataType.TEXT and col.statistics and col.statistics.avg_length:
-        if col.statistics.avg_length > config.pk_text_length_threshold:
-            score -= config.pk_long_text_penalty
-
-    return score
-
-
-def _calculate_name_score(col_name: str, config: KeyConfig) -> float:
-    score = 0.0
-
-    col_name_lower = col_name.lower()
+    col_name_lower = col.name.lower()
 
     if col_name_lower in ['id', 'pk', 'key']:
         score += config.pk_primary_name_bonus
     elif col_name_lower.endswith('_id') or col_name_lower.endswith('id'):
         score += config.pk_id_name_bonus
-    elif col_name_lower.startswith('id_') or 'uuid' in col_name_lower:
-        score += config.pk_uuid_type_bonus
+
+    if col.data_type in [DataType.INTEGER, DataType.BIGINT, DataType.UUID]:
+        score += config.pk_type_bonus
+
+    if col.data_type == DataType.TEXT and col.statistics and col.statistics.avg_length:
+        if col.statistics.avg_length > config.pk_text_length_threshold:
+            score -= config.pk_long_text_penalty
 
     return score

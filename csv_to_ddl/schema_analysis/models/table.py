@@ -15,7 +15,7 @@ class ColumnStatistics:
 
 @dataclass
 class ColumnSizeSpec:
-    max_length: Optional[int] = None
+    length: Optional[int] = None
     precision: Optional[int] = None
     scale: Optional[int] = None
 

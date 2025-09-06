@@ -84,7 +84,7 @@ def build_reference_keys_map(table_specs: Dict[str, TableSpec],
 
         for col in table_spec.columns:
             if (col.statistics
-                    and col.statistics.unique_ratio >= config.pk_single_uniqueness_threshold
+                    and col.statistics.unique_ratio >= config.pk_uniqueness_threshold
                     and col.statistics.distinct_count > 1
                     and col.name not in reference_keys[table_name]['single_keys']):
                 col_values = get_single_column_values_from_data(col.name, table_data, table_header)

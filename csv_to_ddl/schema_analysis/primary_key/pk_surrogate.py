@@ -1,16 +1,15 @@
 from typing import Tuple
 
-from csv_to_ddl.config.default_config import KeyConfig
 from csv_to_ddl.schema_analysis.models.dialects import DataType
 from csv_to_ddl.schema_analysis.models.table import TableSpec, ColumnSpec, ColumnStatistics, PrimaryKeySpec
 
 
-def generate_surrogate_primary_key(table_spec: TableSpec, config: KeyConfig) -> Tuple[PrimaryKeySpec, ColumnSpec]:
-    surrogate_name = config.surrogate_key_name
+def generate_surrogate_primary_key(table_spec: TableSpec) -> Tuple[PrimaryKeySpec, ColumnSpec]:
+    surrogate_name = f"{table_spec.name}_id"
     existing_names = {col.name.lower() for col in table_spec.columns}
     counter = 1
     while surrogate_name.lower() in existing_names:
-        surrogate_name = f"{config.surrogate_key_name}_{counter}"
+        surrogate_name = f"{table_spec.name}_id_{counter}"
         counter += 1
 
     surrogate_column = ColumnSpec(name=surrogate_name,

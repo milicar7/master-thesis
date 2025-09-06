@@ -9,6 +9,32 @@ from schema_analysis.models.dialects import DataType
 
 
 def detect_column_type(values: List[str], config: TypeConfig) -> DataType:
+    """
+    Multi-stage data type detection algorithm using confidence-based scoring.
+    
+    Process:
+    1. Filter out null/empty values for reliable analysis
+    2. Test values against ordered list of type detectors:
+       - Structured types first (boolean, numeric, UUID, email, URL)
+       - Date/time types with various format recognition
+       - JSON for complex nested data
+    3. Each detector returns confidence ratio (0.0-1.0)
+    4. Select first type meeting confidence threshold
+    5. Fallback to string types based on length analysis:
+       - CHAR for single characters
+       - VARCHAR for short strings
+       - TEXT for long strings
+    
+    Ordering is critical: more specific types tested first to avoid
+    false positives (e.g., "123" could be integer or varchar).
+    
+    Args:
+        values: All values in the column
+        config: Type detection configuration with thresholds
+        
+    Returns:
+        Most appropriate SQL data type based on content analysis
+    """
     if not values:
         return DataType.TEXT
 
@@ -17,6 +43,7 @@ def detect_column_type(values: List[str], config: TypeConfig) -> DataType:
     if not non_empty_values:
         return DataType.TEXT
 
+    # Ordered type tests - most specific first
     type_tests = [
         (is_boolean, DataType.BOOLEAN),
         (is_integer, DataType.INTEGER),
@@ -34,11 +61,13 @@ def detect_column_type(values: List[str], config: TypeConfig) -> DataType:
 
     sample_values = non_empty_values[:min(len(non_empty_values), config.type_detection_sample_size)]
 
+    # Test structured types with confidence thresholds
     for test_func, data_type in type_tests:
         match_ratio = test_func(sample_values)
         if match_ratio >= config.type_detection_confidence_threshold:
             return data_type
 
+    # Fallback to string types based on length analysis
     lengths = [len(v) for v in sample_values]
     max_length = max(lengths) if lengths else 0
     if max_length <= 1 and all(len(v) == 1 for v in sample_values):

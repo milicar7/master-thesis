@@ -16,10 +16,23 @@ class ThirdNormalForm(NormalForm):
     def check(self, table_name: str, header: List[str],
               rows: List[List[str]], table_spec: TableSpec) -> List[NormalizationSuggestion]:
         """
-        Check for Third Normal Form violations by detecting transitive dependencies.
+        Third Normal Form violation detection algorithm.
         
-        A columns_and_types violates 3NF if there are non-key attributes that depend on other
-        non-key attributes (transitive dependency).
+        Algorithm detects transitive dependencies where non-key attributes depend
+        on other non-key attributes rather than directly on the primary key.
+        
+        Process:
+        1. Identify primary key columns and non-key columns
+        2. For each non-key column as potential determinant:
+           - Test functional dependencies with other non-key columns
+           - Calculate confidence based on consistency and uniqueness
+        3. Generate normalization suggestions for splitting tables
+        
+        Transitive dependency: A → B → C where A is PK, B is non-key, C depends on B
+        Solution: Split into two tables to eliminate the transitive path
+        
+        Returns:
+            List of normalization suggestions with proposed table splits
         """
         suggestions = []
 
@@ -93,6 +106,17 @@ class ThirdNormalForm(NormalForm):
 
     @staticmethod
     def _check_functional_dependency(rows: List[List[str]], det_idx: int, dep_idx: int) -> bool:
+        """
+        Test functional dependency between two columns using determinant mapping.
+        
+        A functional dependency X → Y exists if each value of X determines
+        exactly one value of Y. Algorithm creates a mapping from determinant
+        values to dependent values and checks for consistency.
+        
+        Returns:
+            True if functional dependency exists, False if multiple dependent
+            values exist for the same determinant value
+        """
         dependency_map = {}
         det_values_seen = set()
 
@@ -106,11 +130,14 @@ class ThirdNormalForm(NormalForm):
             det_values_seen.add(det_value)
 
             if det_value in dependency_map:
+                # Violation: same determinant maps to different dependent values
                 if dependency_map[det_value] != dep_value:
                     return False
             else:
                 dependency_map[det_value] = dep_value
 
+        # Functional dependency exists if we have multiple determinant values
+        # and each maps to exactly one dependent value
         return 1 < len(det_values_seen) == len(dependency_map)
 
     def _calculate_dependency_confidence(self, rows: List[List[str]], col_indices: Dict[str, int],

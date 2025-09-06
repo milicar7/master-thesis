@@ -16,6 +16,29 @@ class HeaderDetection:
         self.logger = logging.getLogger(__name__)
 
     def has_headers(self, rows) -> bool:
+        """
+        Header detection algorithm using multi-factor scoring.
+        
+        Determines if the first row contains column headers or actual data
+        by analyzing multiple characteristics and comparing with data rows.
+        
+        Process:
+        1. Sample first row as potential header and subsequent rows as data
+        2. For each potential header cell, calculate composite score:
+           - Positive indicators: alphabetic patterns, naming conventions
+           - Negative penalties: numeric/date values (less likely to be headers)
+           - Type comparison: different types between header and data suggest header row
+        3. Apply global adjustments:
+           - Uniqueness penalty: headers should be mostly unique
+           - Pattern boost: common suffixes like '_id', '_name' increase confidence
+        4. Compare final confidence against threshold
+        
+        Critical for CSV processing as it determines whether to treat first row
+        as headers or data, affecting all downstream schema analysis.
+        
+        Returns:
+            True if first row likely contains headers, False if it's data
+        """
         if not rows:
             return False
 
@@ -28,6 +51,7 @@ class HeaderDetection:
         header_score = 0.0
         total_cols = len(first_row)
 
+        # Score each potential header cell
         for i, cell in enumerate(first_row):
             col_score = 0.0
             cell = str(cell).strip()
@@ -36,12 +60,14 @@ class HeaderDetection:
             if data_rows and i < len(data_rows[0]):
                 data_values = [row[i] if i < len(row) else '' for row in data_rows[:detection_sample_size]]
 
+            # Multi-factor scoring
             col_score += self._calculate_header_indicators_score(cell)
             col_score -= self._calculate_anti_header_penalties(cell)
             col_score += self._calculate_type_comparison_score(cell, data_values)
 
             header_score += max(0.0, min(1.0, col_score))
 
+        # Apply global confidence adjustments
         confidence = header_score / total_cols if total_cols > 0 else 0.0
         confidence *= self._calculate_uniqueness_penalty(first_row)
         confidence += self._calculate_common_pattern_boost(first_row)

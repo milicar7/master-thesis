@@ -27,6 +27,6 @@ class PrimaryKeyAnalyzer:
             self.logger.info(f"Composite primary key detected for {table_spec.name}: {composite_pk.columns}")
             return composite_pk, None
 
-        surrogate_pk, surrogate_column = generate_surrogate_primary_key(table_spec, self.config)
+        surrogate_pk, surrogate_column = generate_surrogate_primary_key(table_spec)
         self.logger.info(f"Surrogate primary key generated for {table_spec.name}: {surrogate_pk.columns}")
         return surrogate_pk, surrogate_column

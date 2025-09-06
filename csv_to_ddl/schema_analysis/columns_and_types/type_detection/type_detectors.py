@@ -5,6 +5,17 @@ from typing import List
 
 
 def is_boolean(values: List[str]) -> float:
+    """
+    Detect boolean data type by pattern matching common boolean representations.
+    
+    Recognizes various boolean formats including:
+    - Standard: true/false, 1/0
+    - Common variations: yes/no, y/n, t/f
+    - System states: on/off, enabled/disabled
+    
+    Returns:
+        Confidence ratio (0.0-1.0) based on how many values match boolean patterns
+    """
     boolean_values = {
         'true', 'false', '1', '0', 'yes', 'no', 'y', 'n',
         't', 'f', 'on', 'off', 'enabled', 'disabled'
@@ -15,6 +26,16 @@ def is_boolean(values: List[str]) -> float:
 
 
 def is_integer(values: List[str]) -> float:
+    """
+    Detect integer data type using regex pattern matching.
+    
+    Matches whole numbers (positive and negative) without decimal points.
+    Also tracks min/max values for potential size optimization.
+    Pattern: '^-?\\d+$' matches optional minus sign followed by one or more digits.
+    
+    Returns:
+        Confidence ratio based on how many values match integer pattern
+    """
     matches = 0
     min_val, max_val = float('inf'), float('-inf')
 
@@ -29,6 +50,16 @@ def is_integer(values: List[str]) -> float:
 
 
 def is_bigint(values: List[str]) -> float:
+    """
+    Detect if integers require BIGINT data type due to size constraints.
+    
+    Checks if integer values exceed standard 32-bit integer range (2^31).
+    This helps determine when to use BIGINT instead of regular INTEGER type.
+    Only counts values that exceed the standard integer range.
+    
+    Returns:
+        Ratio of values that require BIGINT storage
+    """
     matches = 0
     int_range = 2 ** 31
 

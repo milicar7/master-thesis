@@ -15,9 +15,9 @@ class HeaderDetection:
         self.type_config = ConfigManager.get_type_config()
         self.logger = logging.getLogger(__name__)
 
-    def has_headers(self, rows) -> bool:
+    def has_header(self, rows) -> bool:
         """
-        Header detection algorithm using multi-factor scoring.
+        Header detection algorithm using multifactor scoring.
         
         Determines if the first row contains column headers or actual data
         by analyzing multiple characteristics and comparing with data rows.

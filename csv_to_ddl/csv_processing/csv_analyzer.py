@@ -39,7 +39,7 @@ class CSVAnalyzer:
         return self.create_individual_tables(files_data)
 
     def get_header_and_data(self, rows: List[List[str]]) -> Dict[str, List[str]]:
-        if self.header_detection.has_headers(rows):
+        if self.header_detection.has_header(rows):
             header = [str(h).strip() for h in rows[0]]
             data_rows = rows[1:]
         else:

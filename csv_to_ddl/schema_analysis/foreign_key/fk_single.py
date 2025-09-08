@@ -57,9 +57,9 @@ def detect_single_column_foreign_keys(table_name: str,
 
             for ref_col, ref_values in ref_data['single_keys'].items():
                 # Calculate relationship strength score
-                match_score, overlap_ratio = _calculate_match_score(col_values, ref_values,
-                                                                    col.name, ref_col,
-                                                                    ref_table, reference_keys, config)
+                match_score, overlap_ratio = calculate_match_score(col_values, ref_values,
+                                                                   col.name, ref_col,
+                                                                   ref_table, reference_keys, config)
 
                 if match_score and match_score > best_score:
                     best_score = match_score
@@ -77,10 +77,10 @@ def detect_single_column_foreign_keys(table_name: str,
     return foreign_keys
 
 
-def _calculate_match_score(col_values: Set[str], ref_values: Set[str],
-                           col_name: str, ref_col_name: str,
-                           ref_table: str, reference_keys: Dict[str, Dict],
-                           config: KeyConfig) -> tuple[float, float]:
+def calculate_match_score(col_values: Set[str], ref_values: Set[str],
+                          col_name: str, ref_col_name: str,
+                          ref_table: str, reference_keys: Dict[str, Dict],
+                          config: KeyConfig) -> tuple[float, float]:
     is_valid, overlap_ratio = _is_valid_fk_relationship(col_values, ref_values, config)
     if not is_valid:
         return 0.0, overlap_ratio

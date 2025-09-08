@@ -68,8 +68,7 @@ def _test_composite_uniqueness(col_names: List[str], rows: List[List[str]], head
     Test uniqueness of column combination using actual data.
 
     Creates tuples from specified columns across all rows and measures
-    the ratio of unique tuples to total tuples. Filters out rows with
-    null or empty values to ensure data quality.
+    the ratio of unique tuples to total tuples.
 
     Returns:
         Uniqueness ratio (0.0 to 1.0), where 1.0 means all combinations are unique
@@ -83,8 +82,7 @@ def _test_composite_uniqueness(col_names: List[str], rows: List[List[str]], head
     for row in rows:
         if len(row) > max(col_indices):
             combo = tuple(row[i] for i in col_indices)
-            if all(val is not None and str(val).strip() != '' for val in combo):
-                combinations.append(combo)
+            combinations.append(combo)
 
     if not combinations:
         return 0.0

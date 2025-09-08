@@ -7,6 +7,7 @@ from csv_to_ddl.csv_to_ddl_converter import CSVToDDLConverter
 from schema_analysis.models.dialects import DatabaseDialect
 
 
+# noinspection SpellCheckingInspection
 def setup_logging(verbose: bool = False):
     level = logging.DEBUG if verbose else logging.INFO
     logging.basicConfig(

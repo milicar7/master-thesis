@@ -27,7 +27,7 @@ def detect_composite_foreign_keys(table_name: str,
     - Uses tuple-based set intersection for multi-column value matching
     
     More complex than single FK detection due to combinatorial column matching
-    and multi-dimensional value space analysis.
+    and multidimensional value space analysis.
     
     Returns:
         List of composite foreign key specifications with confidence scores

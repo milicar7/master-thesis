@@ -7,8 +7,7 @@ def calculate_size_spec(data_type: DataType, max_detected_length: int, config: T
     if data_type in [DataType.VARCHAR, DataType.EMAIL]:
         return ColumnSizeSpec(length=config.max_varchar_length)
     elif data_type == DataType.CHAR:
-        max_length = min(max_detected_length, config.max_varchar_length)
-        return ColumnSizeSpec(length=max_length)
+        return ColumnSizeSpec(length=max_detected_length)
     elif data_type == DataType.DECIMAL:
         precision = config.decimal_precision_limit
         scale = config.decimal_scale_limit

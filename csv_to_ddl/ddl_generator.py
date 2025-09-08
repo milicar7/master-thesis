@@ -13,6 +13,7 @@ class DDLGenerator:
         self.config = DIALECT_CONFIGS[dialect]
         self.logger = logging.getLogger(__name__)
 
+    # noinspection SpellCheckingInspection
     def generate_schema_ddl(self, tables_specs: Dict[str, TableSpec]) -> str:
         """
         DDL generation algorithm with multi-dialect support.

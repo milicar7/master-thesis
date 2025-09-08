@@ -19,9 +19,7 @@ class CSVToDDLConverter:
 
         tables_headers, tables_data = self.csv_analyzer.process(input_path)
         tables_specs = self.schema_analyzer.analyze_tables(tables_headers, tables_data)
-        output = self.ddl_generator.generate_schema_ddl(tables_specs)
-
-        return output
+        return self.ddl_generator.generate_schema_ddl(tables_specs)
 
     def write_output(self, output, result):
         if output:

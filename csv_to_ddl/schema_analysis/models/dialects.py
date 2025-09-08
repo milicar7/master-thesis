@@ -41,6 +41,7 @@ class DialectConfig:
     boolean_needs_size: bool = False
 
 
+# noinspection SpellCheckingInspection
 DIALECT_CONFIGS = {
     DatabaseDialect.SQLITE: DialectConfig(
         type_mappings={

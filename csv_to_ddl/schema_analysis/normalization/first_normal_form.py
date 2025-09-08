@@ -16,7 +16,7 @@ class FirstNormalForm(NormalForm):
         """
         First Normal Form violation detection algorithm.
         
-        Detects multi-valued attributes that violate 1NF atomicity requirement.
+        Detects multivalued attributes that violate 1NF atomicity requirement.
         1NF requires that each cell contains only a single, atomic value.
         
         Process:

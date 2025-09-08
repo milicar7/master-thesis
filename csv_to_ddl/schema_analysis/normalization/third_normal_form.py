@@ -52,7 +52,7 @@ class ThirdNormalForm(NormalForm):
         if len(non_key_columns) < self.config.nf3_min_non_key_columns:
             return suggestions
 
-        transitive_deps = self._find_transitive_dependencies(header, rows, pk_columns, non_key_columns)
+        transitive_deps = self.find_transitive_dependencies(header, rows, pk_columns, non_key_columns)
 
         for dependency in transitive_deps:
             lookup_table_columns = [dependency['determinant']] + dependency['dependents']
@@ -70,8 +70,8 @@ class ThirdNormalForm(NormalForm):
 
         return suggestions
 
-    def _find_transitive_dependencies(self, headers: List[str], rows: List[List[str]],
-                                      pk_columns: set, non_key_columns: set) -> List[Dict]:
+    def find_transitive_dependencies(self, headers: List[str], rows: List[List[str]],
+                                     pk_columns: set, non_key_columns: set) -> List[Dict]:
         dependencies = []
 
         col_indices = {col: idx for idx, col in enumerate(headers)}
@@ -86,79 +86,145 @@ class ThirdNormalForm(NormalForm):
 
                 dep_idx = col_indices[dependent_col]
 
-                is_dependent = self._check_functional_dependency(rows, det_idx, dep_idx)
-                self.logger.debug(f"Checking {determinant_col} -> {dependent_col}: {is_dependent}")
-                if is_dependent:
-                    dependent_cols.append(dependent_col)
+                dependency_map = {}
+                det_values_seen = set()
+                has_violation = False
+
+                for row in rows:
+                    if len(row) <= max(det_idx, dep_idx):
+                        continue
+
+                    det_value = row[det_idx].strip()
+                    dep_value = row[dep_idx].strip()
+
+                    det_values_seen.add(det_value)
+
+                    if det_value in dependency_map:
+                        if dependency_map[det_value] != dep_value:
+                            has_violation = True
+                            break
+                    else:
+                        dependency_map[det_value] = dep_value
+
+                if not has_violation:
+                    is_dependent = 1 < len(det_values_seen) == len(dependency_map)
+                    self.logger.debug(f"Checking {determinant_col} -> {dependent_col}: {is_dependent}")
+                    if is_dependent:
+                        dependent_cols.append(dependent_col)
+                else:
+                    self.logger.debug(f"Checking {determinant_col} -> {dependent_col}: False")
 
             if dependent_cols:
-                confidence = self._calculate_dependency_confidence(rows, col_indices, determinant_col, dependent_cols, pk_columns)
-                if confidence > self.config.nf3_confidence_threshold:
-                    dependencies.append({
-                        'determinant': determinant_col,
-                        'dependents': dependent_cols,
-                        'description': f"{', '.join(dependent_cols)} depends on {determinant_col}, creating transitive dependency through primary key",
-                        'new_table_name': f"{determinant_col.lower()}_details",
-                        'confidence': confidence
-                    })
+                pk_dependency_exists = self._check_pk_dependency(determinant_col, pk_columns, rows, col_indices)
+                
+                if pk_dependency_exists:
+                    confidence = self._calculate_dependency_confidence(rows, col_indices, determinant_col, dependent_cols,
+                                                                       pk_columns)
+                    if confidence > self.config.nf3_confidence_threshold:
+                        dependencies.append({
+                            'determinant': determinant_col,
+                            'dependents': dependent_cols,
+                            'description': f"{', '.join(dependent_cols)} depends on {determinant_col}, creating transitive dependency through primary key",
+                            'new_table_name': f"{determinant_col.lower()}_details",
+                            'confidence': confidence
+                        })
 
         return dependencies
 
     @staticmethod
-    def _check_functional_dependency(rows: List[List[str]], det_idx: int, dep_idx: int) -> bool:
+    def _check_pk_dependency(determinant_col: str, pk_columns: set, rows: List[List[str]],
+                             col_indices: Dict[str, int]) -> bool:
         """
-        Test functional dependency between two columns using determinant mapping.
-        
-        A functional dependency X → Y exists if each value of X determines
-        exactly one value of Y. Algorithm creates a mapping from determinant
-        values to dependent values and checks for consistency.
-        
-        Returns:
-            True if functional dependency exists, False if multiple dependent
-            values exist for the same determinant value
+        Check if determinant column functionally depends on primary key.
+        Returns True if PK → determinant (prerequisite for transitive dependency).
         """
-        dependency_map = {}
-        det_values_seen = set()
-
+        det_idx = col_indices[determinant_col]
+        pk_indices = [col_indices[pk_col] for pk_col in pk_columns if pk_col in col_indices]
+        
+        if not pk_indices:
+            return False
+        
+        pk_to_det_map = {}
+        pk_combinations_seen = set()
+        
         for row in rows:
-            if len(row) <= max(det_idx, dep_idx):
+            if len(row) <= max(pk_indices + [det_idx]):
                 continue
-
+                
+            pk_combination = tuple(row[pk_idx].strip() for pk_idx in pk_indices)
             det_value = row[det_idx].strip()
-            dep_value = row[dep_idx].strip()
-
-            det_values_seen.add(det_value)
-
-            if det_value in dependency_map:
-                # Violation: same determinant maps to different dependent values
-                if dependency_map[det_value] != dep_value:
+            
+            pk_combinations_seen.add(pk_combination)
+            
+            if pk_combination in pk_to_det_map:
+                # Violation: same PK maps to different determinant values
+                if pk_to_det_map[pk_combination] != det_value:
                     return False
             else:
-                dependency_map[det_value] = dep_value
+                pk_to_det_map[pk_combination] = det_value
+        
 
-        # Functional dependency exists if we have multiple determinant values
-        # and each maps to exactly one dependent value
-        return 1 < len(det_values_seen) == len(dependency_map)
+        return 1 < len(pk_combinations_seen) == len(pk_to_det_map)
+
 
     def _calculate_dependency_confidence(self, rows: List[List[str]], col_indices: Dict[str, int],
                                          determinant: str, dependents: List[str], pk_columns: set) -> float:
         det_idx = col_indices[determinant]
         det_values, total_rows = self._gather_determinant_values(rows, det_idx)
-        
+
         if total_rows == 0:
             return 0.0
-            
+
         if len(det_values) < self.config.nf3_min_determinant_values:
             return 0.0
-            
+
         if determinant in pk_columns:
             return 0.0
 
         consistency_score = self._calculate_consistency_score(rows, col_indices, det_idx, dependents)
-        base_confidence = self._get_base_confidence(consistency_score)
+        base_confidence = (self.config.nf3_base_confidence_high_threshold
+                           if consistency_score > self.config.nf3_consistency_threshold
+                           else self.config.nf3_base_confidence_low_threshold)
         uniqueness_bonus = self._calculate_uniqueness_bonus(det_values, total_rows)
-        
+
         return min(1.0, base_confidence + uniqueness_bonus)
+
+    def _calculate_consistency_score(self, rows, col_indices, det_idx, dependents):
+        consistency_score = 1.0
+
+        for dep_col in dependents:
+            dep_idx = col_indices[dep_col]
+
+            dependency_map = {}
+            det_values_seen = set()
+
+            for row in rows:
+                if len(row) <= max(det_idx, dep_idx):
+                    continue
+
+                det_value = row[det_idx].strip()
+                dep_value = row[dep_idx].strip()
+
+                det_values_seen.add(det_value)
+
+                if det_value in dependency_map:
+                    if dependency_map[det_value] != dep_value:
+                        break
+                else:
+                    dependency_map[det_value] = dep_value
+            else:
+                has_dependency = 1 < len(det_values_seen) == len(dependency_map)
+                if has_dependency:
+                    continue
+
+            consistency_score -= self.config.nf3_consistency_penalty
+
+        return consistency_score
+
+    def _calculate_uniqueness_bonus(self, det_values, total_rows):
+        uniqueness_ratio = len(det_values) / total_rows
+        return min(self.config.nf3_max_uniqueness_bonus,
+                   uniqueness_ratio * self.config.nf3_uniqueness_bonus_multiplier)
 
     @staticmethod
     def _gather_determinant_values(rows, det_idx):
@@ -169,25 +235,5 @@ class ThirdNormalForm(NormalForm):
             if len(row) > det_idx:
                 det_values.add(row[det_idx].strip())
                 total_rows += 1
-                
+
         return det_values, total_rows
-
-    def _calculate_consistency_score(self, rows, col_indices, det_idx, dependents):
-        consistency_score = 1.0
-        
-        for dep_col in dependents:
-            dep_idx = col_indices[dep_col]
-            if not self._check_functional_dependency(rows, det_idx, dep_idx):
-                consistency_score -= self.config.nf3_consistency_penalty
-                
-        return consistency_score
-
-    def _get_base_confidence(self, consistency_score):
-        return (self.config.nf3_base_confidence_high_threshold
-                if consistency_score > self.config.nf3_consistency_threshold 
-                else self.config.nf3_base_confidence_low_threshold)
-
-    def _calculate_uniqueness_bonus(self, det_values, total_rows):
-        uniqueness_ratio = len(det_values) / total_rows
-        return min(self.config.nf3_max_uniqueness_bonus,
-                  uniqueness_ratio * self.config.nf3_uniqueness_bonus_multiplier)

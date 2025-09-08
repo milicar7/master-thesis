@@ -38,34 +38,26 @@ class SecondNormalForm(NormalForm):
         """
         suggestions = []
 
-        if not self._should_check_2nf(table_spec):
+        if not table_spec or not table_spec.primary_key or len(table_spec.primary_key.columns) <= 1:
             return suggestions
 
-        if rows and header:
-            suggestions.extend(self._check_2nf(
-                table_name, table_spec, rows, header
-            ))
+        if not rows or not header:
+            return suggestions
 
-        return suggestions
-
-    @staticmethod
-    def _should_check_2nf(table_spec: TableSpec) -> bool:
-        if not table_spec:
-            return False
-        return table_spec.primary_key and len(table_spec.primary_key.columns) > 1
-
-    def _check_2nf(self, table_name: str, table_spec: TableSpec,
-                   rows: List[List[str]],
-                   headers: List[str]) -> List[NormalizationSuggestion]:
-        suggestions = []
+        # Perform 2NF analysis
         pk_columns = table_spec.primary_key.columns
-        pk_indices = self._get_pk_indices(pk_columns, headers)
+        pk_indices = []
+        for pk_col in pk_columns:
+            try:
+                pk_indices.append(header.index(pk_col))
+            except ValueError:
+                continue
 
         if len(pk_indices) < 2:
             return suggestions
 
         non_key_columns = [col for col in table_spec.columns if col.name not in pk_columns]
-        partial_dependencies = self._find_partial_dependencies(non_key_columns, rows, headers, pk_columns, pk_indices)
+        partial_dependencies = self.find_partial_dependencies(non_key_columns, rows, header, pk_columns, pk_indices)
 
         for dependency in partial_dependencies:
             partial_key_clean = dependency['partial_key'].lower().replace('_id', '').replace('id', '')
@@ -91,19 +83,10 @@ class SecondNormalForm(NormalForm):
 
         return suggestions
 
-    @staticmethod
-    def _get_pk_indices(pk_columns: List[str], headers: List[str]) -> List[int]:
-        pk_indices = []
-        for pk_col in pk_columns:
-            try:
-                pk_indices.append(headers.index(pk_col))
-            except ValueError:
-                continue
-        return pk_indices
 
-    def _find_partial_dependencies(self, non_key_columns: List, rows: List[List[str]],
-                                   headers: List[str], pk_columns: List[str],
-                                   pk_indices: List[int]) -> List[Dict]:
+    def find_partial_dependencies(self, non_key_columns: List, rows: List[List[str]],
+                                  headers: List[str], pk_columns: List[str],
+                                  pk_indices: List[int]) -> List[Dict]:
         dependencies = []
 
         if len(rows) < self.config.nf2_min_rows_for_analysis:
@@ -124,9 +107,17 @@ class SecondNormalForm(NormalForm):
                 continue
 
             for i, pk_part_index in enumerate(pk_indices):
-                partial_dependency_strength = self._check_partial_dependency(rows, col_index,
-                                                                             [pk_part_index],
-                                                                             pk_indices)
+                partial_key_groups, full_key_groups = self._build_key_groups(
+                    rows, col_index, [pk_part_index], pk_indices
+                )
+
+                if not partial_key_groups or not full_key_groups:
+                    continue
+
+                partial_strength = self._calculate_determination_strength(partial_key_groups)
+                full_strength = self._calculate_determination_strength(full_key_groups)
+
+                partial_dependency_strength = self._evaluate_dependency_strength(partial_strength, full_strength)
 
                 if partial_dependency_strength >= self.config.nf2_partial_dependency_threshold:
                     dependencies.append({
@@ -136,20 +127,6 @@ class SecondNormalForm(NormalForm):
                     })
 
         return dependencies
-
-    def _check_partial_dependency(self, rows, dependent_col_index,
-                                  partial_key_indices, full_key_indices):
-        partial_key_groups, full_key_groups = self._build_key_groups(
-            rows, dependent_col_index, partial_key_indices, full_key_indices
-        )
-
-        if not partial_key_groups or not full_key_groups:
-            return 0.0
-
-        partial_strength = self._calculate_determination_strength(partial_key_groups)
-        full_strength = self._calculate_determination_strength(full_key_groups)
-
-        return self._evaluate_dependency_strength(partial_strength, full_strength)
 
     @staticmethod
     def _build_key_groups(rows, dependent_col_index, partial_key_indices, full_key_indices):

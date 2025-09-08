@@ -32,7 +32,7 @@ class ColumnAnalyzer:
             Complete column specification with type, size, and constraints
         """
         statistics_obj = self._calculate_statistics(values)
-        data_type = detect_column_type(values, self.type_config)
+        data_type = detect_column_type(values, self.type_config, statistics_obj)
         size_spec = calculate_size_spec(data_type, statistics_obj.max_length, self.type_config)
         nullable = statistics_obj.null_count > 0
 

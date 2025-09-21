@@ -1,6 +1,6 @@
 from csv_to_ddl.config.default_config import TypeConfig
-from schema_analysis.models.dialects import DataType, DatabaseDialect, DIALECT_CONFIGS
-from schema_analysis.models.table import ColumnSizeSpec
+from csv_to_ddl.schema_analysis.models.dialects import DataType, DatabaseDialect, DIALECT_CONFIGS
+from csv_to_ddl.schema_analysis.models.table import ColumnSizeSpec
 
 
 def calculate_size_spec(data_type: DataType, max_detected_length: int, config: TypeConfig) -> ColumnSizeSpec:

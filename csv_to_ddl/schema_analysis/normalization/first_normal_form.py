@@ -1,8 +1,8 @@
 import logging
 from typing import List
 
-from schema_analysis.models.table import NormalizationSuggestion, TableSpec
-from schema_analysis.normalization.base_normal_form import NormalForm
+from csv_to_ddl.schema_analysis.models.table import NormalizationSuggestion, TableSpec
+from csv_to_ddl.schema_analysis.normalization.base_normal_form import NormalForm
 
 
 class FirstNormalForm(NormalForm):

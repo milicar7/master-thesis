@@ -1,9 +1,9 @@
 import logging
 from typing import Dict, List
 
-from schema_analysis.foreign_key.fk_analyzer import ForeignKeyAnalyzer
-from schema_analysis.models.table import TableSpec
-from schema_analysis.table_analyzer import TableAnalyzer
+from csv_to_ddl.schema_analysis.foreign_key.fk_analyzer import ForeignKeyAnalyzer
+from csv_to_ddl.schema_analysis.models.table import TableSpec
+from csv_to_ddl.schema_analysis.table_analyzer import TableAnalyzer
 
 
 class SchemaAnalyzer:

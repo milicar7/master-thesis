@@ -2,10 +2,10 @@ import logging
 from typing import Dict, List
 
 from csv_to_ddl.config.config_manager import ConfigManager
-from schema_analysis.foreign_key.fk_composite import (detect_composite_foreign_keys)
-from schema_analysis.foreign_key.fk_map import (build_reference_keys_map)
-from schema_analysis.foreign_key.fk_single import (detect_single_column_foreign_keys)
-from schema_analysis.models.table import TableSpec
+from csv_to_ddl.schema_analysis.foreign_key.fk_composite import (detect_composite_foreign_keys)
+from csv_to_ddl.schema_analysis.foreign_key.fk_map import (build_reference_keys_map)
+from csv_to_ddl.schema_analysis.foreign_key.fk_single import (detect_single_column_foreign_keys)
+from csv_to_ddl.schema_analysis.models.table import TableSpec
 
 
 class ForeignKeyAnalyzer:

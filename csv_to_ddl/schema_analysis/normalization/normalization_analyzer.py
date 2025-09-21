@@ -2,10 +2,10 @@ import logging
 from typing import List
 
 from csv_to_ddl.config.config_manager import ConfigManager
-from schema_analysis.models.table import TableSpec, NormalizationSuggestion
-from schema_analysis.normalization.first_normal_form import FirstNormalForm
-from schema_analysis.normalization.second_normal_form import SecondNormalForm
-from schema_analysis.normalization.third_normal_form import ThirdNormalForm
+from csv_to_ddl.schema_analysis.models.table import TableSpec, NormalizationSuggestion
+from csv_to_ddl.schema_analysis.normalization.first_normal_form import FirstNormalForm
+from csv_to_ddl.schema_analysis.normalization.second_normal_form import SecondNormalForm
+from csv_to_ddl.schema_analysis.normalization.third_normal_form import ThirdNormalForm
 
 
 class NormalizationAnalyzer:

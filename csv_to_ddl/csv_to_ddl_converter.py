@@ -3,8 +3,8 @@ from pathlib import Path
 
 from csv_to_ddl.csv_processing.csv_analyzer import CSVAnalyzer
 from csv_to_ddl.schema_analysis.schema_analyzer import SchemaAnalyzer
-from ddl_generator import DDLGenerator
-from schema_analysis.models.dialects import DatabaseDialect
+from csv_to_ddl.ddl_generator import DDLGenerator
+from csv_to_ddl.schema_analysis.models.dialects import DatabaseDialect
 
 
 class CSVToDDLConverter:

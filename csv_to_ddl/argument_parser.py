@@ -1,7 +1,7 @@
 import argparse
 from pathlib import Path
 
-from schema_analysis.models.dialects import DatabaseDialect
+from csv_to_ddl.schema_analysis.models.dialects import DatabaseDialect
 
 
 class ArgumentParser:

@@ -46,7 +46,7 @@ def detect_single_key(table_spec: TableSpec, config: KeyConfig) -> Optional[Prim
     candidates.sort(key=lambda x: x[1], reverse=True)
     col_name, score = candidates[0]
 
-    logger.info(f"Primary key candidate for {table_spec.name}: {col_name} (score: {score:.1f}")
+    logger.info(f"Primary key candidate for {table_spec.name}: {col_name} (score: {score:.1f})")
 
     return PrimaryKeySpec(columns=[col_name],
                           key_type="natural")

@@ -2,8 +2,8 @@ import logging
 from typing import Dict, List, Optional
 
 from csv_to_ddl.config.default_config import KeyConfig
-from schema_analysis.foreign_key.fk_map import get_composite_values_from_data
-from schema_analysis.models.table import TableSpec, ForeignKeySpec
+from csv_to_ddl.schema_analysis.foreign_key.fk_map import get_composite_values_from_data
+from csv_to_ddl.schema_analysis.models.table import TableSpec, ForeignKeySpec
 
 logger = logging.getLogger(__name__)
 

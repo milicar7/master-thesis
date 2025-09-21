@@ -2,7 +2,7 @@ import logging
 from pathlib import Path
 from typing import Dict, List, Tuple
 
-from csv_processing.header_detection import HeaderDetection
+from csv_to_ddl.csv_processing.header_detection import HeaderDetection
 from csv_to_ddl.config.config_manager import ConfigManager
 from csv_to_ddl.csv_processing.csv_helpers import find_csv_files, read_csv_file
 

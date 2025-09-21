@@ -1,10 +1,10 @@
 import logging
 from typing import List
 
-from schema_analysis.columns_and_types.column_analyzer import ColumnAnalyzer
-from schema_analysis.models.table import TableSpec
-from schema_analysis.normalization.normalization_analyzer import NormalizationAnalyzer
-from schema_analysis.primary_key.pk_analyzer import PrimaryKeyAnalyzer
+from csv_to_ddl.schema_analysis.columns_and_types.column_analyzer import ColumnAnalyzer
+from csv_to_ddl.schema_analysis.models.table import TableSpec
+from csv_to_ddl.schema_analysis.normalization.normalization_analyzer import NormalizationAnalyzer
+from csv_to_ddl.schema_analysis.primary_key.pk_analyzer import PrimaryKeyAnalyzer
 
 
 class TableAnalyzer:

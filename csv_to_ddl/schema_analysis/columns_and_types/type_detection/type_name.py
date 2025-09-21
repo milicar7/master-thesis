@@ -1,12 +1,12 @@
 from typing import List, Optional
 
-from config.default_config import TypeConfig
-from schema_analysis.columns_and_types.type_detection.type_detectors import (is_boolean, is_integer, is_bigint,
+from csv_to_ddl.config.default_config import TypeConfig
+from csv_to_ddl.schema_analysis.columns_and_types.type_detection.type_detectors import (is_boolean, is_integer, is_bigint,
                                                                              is_decimal, is_float, is_uuid, is_email,
                                                                              is_url, is_datetime, is_date, is_time,
                                                                              is_json)
-from schema_analysis.models.dialects import DataType
-from schema_analysis.models.table import ColumnStatistics
+from csv_to_ddl.schema_analysis.models.dialects import DataType
+from csv_to_ddl.schema_analysis.models.table import ColumnStatistics
 
 
 def detect_column_type(values: List[str], config: TypeConfig, statistics: Optional[ColumnStatistics] = None) -> DataType:

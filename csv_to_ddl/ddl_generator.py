@@ -2,9 +2,9 @@ import logging
 from datetime import datetime
 from typing import Dict
 
-from schema_analysis.columns_and_types.type_detection.type_size import format_type_with_size
-from schema_analysis.models.dialects import DIALECT_CONFIGS, DatabaseDialect
-from schema_analysis.models.table import TableSpec, ColumnSpec, ForeignKeySpec
+from csv_to_ddl.schema_analysis.columns_and_types.type_detection.type_size import format_type_with_size
+from csv_to_ddl.schema_analysis.models.dialects import DIALECT_CONFIGS, DatabaseDialect
+from csv_to_ddl.schema_analysis.models.table import TableSpec, ColumnSpec, ForeignKeySpec
 
 
 class DDLGenerator:
@@ -13,7 +13,6 @@ class DDLGenerator:
         self.config = DIALECT_CONFIGS[dialect]
         self.logger = logging.getLogger(__name__)
 
-    # noinspection SpellCheckingInspection
     def generate_schema_ddl(self, tables_specs: Dict[str, TableSpec]) -> str:
         """
         DDL generation algorithm with multi-dialect support.

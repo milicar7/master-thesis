@@ -1,7 +1,7 @@
 from typing import Dict, List, Set, Tuple
 
 from csv_to_ddl.config.default_config import KeyConfig
-from schema_analysis.models.table import TableSpec
+from csv_to_ddl.schema_analysis.models.table import TableSpec
 
 
 def get_table_headers(columns: List) -> List[str]:

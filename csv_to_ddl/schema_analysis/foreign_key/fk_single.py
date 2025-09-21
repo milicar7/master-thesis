@@ -3,8 +3,8 @@ import re
 from typing import Dict, List, Set
 
 from csv_to_ddl.config.default_config import KeyConfig
-from schema_analysis.foreign_key.fk_map import get_single_column_values_from_data
-from schema_analysis.models.table import ForeignKeySpec, TableSpec
+from csv_to_ddl.schema_analysis.foreign_key.fk_map import get_single_column_values_from_data
+from csv_to_ddl.schema_analysis.models.table import ForeignKeySpec, TableSpec
 
 logger = logging.getLogger(__name__)
 

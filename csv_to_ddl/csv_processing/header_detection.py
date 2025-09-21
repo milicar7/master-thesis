@@ -2,11 +2,11 @@ import logging
 import re
 from typing import List
 
-from config.config_manager import ConfigManager
-from schema_analysis.columns_and_types.type_detection.type_detectors import is_integer, is_decimal, is_float, is_date, \
+from csv_to_ddl.config.config_manager import ConfigManager
+from csv_to_ddl.schema_analysis.columns_and_types.type_detection.type_detectors import is_integer, is_decimal, is_float, is_date, \
     is_datetime
-from schema_analysis.columns_and_types.type_detection.type_name import detect_column_type
-from schema_analysis.models.dialects import DataType
+from csv_to_ddl.schema_analysis.columns_and_types.type_detection.type_name import detect_column_type
+from csv_to_ddl.schema_analysis.models.dialects import DataType
 
 
 class HeaderDetection:

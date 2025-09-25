@@ -129,7 +129,7 @@ def is_url(values: List[str]) -> float:
 
 def is_date(values: List[str]) -> float:
     date_formats: List[str] = ["%Y-%m-%d", "%d/%m/%Y", "%m/%d/%Y", "%Y/%m/%d",
-                               "%d-%m-%Y", "%m-%d-%Y", "%Y.%m.%d", "%d.%m.%Y"]
+                               "%d-%m-%Y", "%m-%d-%Y", "%Y.%m.%d", "%d.%m.%Y", "%m.%d.%Y"]
 
     matches = 0
     successful_formats = []
@@ -149,6 +149,8 @@ def is_date(values: List[str]) -> float:
 
 def is_datetime(values: List[str]) -> float:
     datetime_formats: List[str] = ["%Y-%m-%d %H:%M:%S", "%d/%m/%Y %H:%M:%S", "%m/%d/%Y %H:%M:%S",
+                                   "%Y/%m/%d %H:%M:%S", "%d-%m-%Y %H:%M:%S", "%m-%d-%Y %H:%M:%S",
+                                   "%d.%m.%Y %H:%M:%S", "%m.%d.%Y %H:%M:%S", "%Y.%m.%d %H:%M:%S",
                                    "%Y-%m-%dT%H:%M:%S", "%Y-%m-%d %H:%M:%S.%f"]
     matches = 0
     successful_formats = []

@@ -1,5 +1,5 @@
 -- Generated DDL for postgresql
--- Generated at: 2025-09-21T15:26:30.337232
+-- Generated at: 2025-09-25T10:28:55.589844
 
 CREATE TABLE "olist_sellers_dataset" (
     "seller_id" VARCHAR(255) NOT NULL,
@@ -29,7 +29,7 @@ CREATE TABLE "olist_orders_dataset" (
 );
 
 -- NORMALIZATION SUGGESTIONS:
--- [3NF] olist_orders_dataset: Transitive dependency detected: order_estimated_delivery_date, order_delivered_customer_date, order_approved_at, order_purchase_timestamp, order_status, order_delivered_carrier_date depends on customer_id, creating transitive dependency through primary key. Consider extracting to a separate 'customer_id_details' columns_and_types with columns: customer_id, order_estimated_delivery_date, order_delivered_customer_date, order_approved_at, order_purchase_timestamp, order_status, order_delivered_carrier_date.
+-- [3NF] olist_orders_dataset: Transitive dependency detected: order_delivered_carrier_date, order_estimated_delivery_date, order_status, order_delivered_customer_date, order_purchase_timestamp, order_approved_at depends on customer_id, creating transitive dependency through primary key. Consider extracting to a separate 'customer_id_details' columns_and_types with columns: customer_id, order_delivered_carrier_date, order_estimated_delivery_date, order_status, order_delivered_customer_date, order_purchase_timestamp, order_approved_at.
 --   Confidence: 1.0
 
 CREATE TABLE "olist_order_items_dataset" (

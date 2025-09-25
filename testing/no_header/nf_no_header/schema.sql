@@ -1,5 +1,5 @@
 -- Generated DDL for postgresql
--- Generated at: 2025-09-21T15:26:06.196952
+-- Generated at: 2025-09-25T10:28:28.603551
 
 CREATE TABLE "test_nf_data_no_header" (
     "column_1" INTEGER NOT NULL,

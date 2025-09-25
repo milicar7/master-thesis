@@ -1,5 +1,5 @@
 -- Generated DDL for postgresql
--- Generated at: 2025-09-21T15:26:11.480342
+-- Generated at: 2025-09-25T10:28:34.154180
 
 CREATE TABLE "order_products" (
     "order_id" INTEGER NOT NULL,
@@ -21,7 +21,7 @@ CREATE TABLE "products" (
 );
 
 -- NORMALIZATION SUGGESTIONS:
--- [3NF] products: Transitive dependency detected: department_id, aisle_id depends on product_name, creating transitive dependency through primary key. Consider extracting to a separate 'product_name_details' columns_and_types with columns: product_name, department_id, aisle_id.
+-- [3NF] products: Transitive dependency detected: aisle_id, department_id depends on product_name, creating transitive dependency through primary key. Consider extracting to a separate 'product_name_details' columns_and_types with columns: product_name, aisle_id, department_id.
 --   Confidence: 1.0
 
 -- [3NF] products: Transitive dependency detected: department_id depends on aisle_id, creating transitive dependency through primary key. Consider extracting to a separate 'aisle_id_details' columns_and_types with columns: aisle_id, department_id.
